@@ -24,7 +24,7 @@ const PET_TYPES = {
 const PET_COLORS = {
     golden:  { name: 'Golden',    hex: '#f59e0b', glow: 'rgba(245,158,11,0.35)' },
     brown:   { name: 'Brown',     hex: '#92400e', glow: 'rgba(146,64,14,0.35)'  },
-    white:   { name: 'Snow White',hex: '#e5e7eb', glow: 'rgba(229,231,235,0.4)' },
+    white:   { name: 'Cookie White',hex: '#e5e7eb', glow: 'rgba(229,231,235,0.4)' },
     midnight:{ name: 'Midnight',  hex: '#1e3a5f', glow: 'rgba(30,58,95,0.45)'   },
     lavender:{ name: 'Lavender',  hex: '#a78bfa', glow: 'rgba(167,139,250,0.4)' },
     coral:   { name: 'Coral',     hex: '#f87171', glow: 'rgba(248,113,113,0.4)' }
