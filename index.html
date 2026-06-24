@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PetPal — Virtual Pet Simulator">
+    <meta name="theme-color" content="#07071a">
+    <title>PetPal — Virtual Pet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" defer></script>
+</head>
+<body>
+<div id="app">
+
+    <!-- ═══════════════════════════════════════════════
+         SETUP WIZARD
+    ════════════════════════════════════════════════ -->
+        <section id="setupScreen" class="screen active">
+        <!-- ── Pixel World Background Scene ── -->
+        <div class="setup-bg-art" aria-hidden="true">
+
+            <!-- Smiley Pixel Sun -->
+            <svg class="px-sprite px-sun" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;width:90px;height:90px;top:5%;right:7%;position:absolute">
+                <rect x="32" y="4"  width="16" height="8"  fill="#FFD700"/>
+                <rect x="32" y="68" width="16" height="8"  fill="#FFD700"/>
+                <rect x="4"  y="32" width="8"  height="16" fill="#FFD700"/>
+                <rect x="68" y="32" width="8"  height="16" fill="#FFD700"/>
+                <rect x="12" y="12" width="8"  height="8"  fill="#FFD700"/>
+                <rect x="60" y="12" width="8"  height="8"  fill="#FFD700"/>
+                <rect x="12" y="60" width="8"  height="8"  fill="#FFD700"/>
+                <rect x="60" y="60" width="8"  height="8"  fill="#FFD700"/>
+                <rect x="16" y="16" width="48" height="48" fill="#FFD700"/>
+                <rect x="20" y="20" width="40" height="40" fill="#FFE44D"/>
+                <rect x="24" y="32" width="8"  height="8"  fill="#553300"/>
+                <rect x="48" y="32" width="8"  height="8"  fill="#553300"/>
+                <rect x="24" y="46" width="4"  height="4"  fill="#553300"/>
+                <rect x="28" y="50" width="4"  height="4"  fill="#553300"/>
+                <rect x="32" y="52" width="16" height="4"  fill="#553300"/>
+                <rect x="48" y="50" width="4"  height="4"  fill="#553300"/>
+                <rect x="52" y="46" width="4"  height="4"  fill="#553300"/>
+            </svg>
+
+            <!-- Pixel Cloud 1 (left) -->
+            <svg class="px-sprite px-cloud-1" viewBox="0 0 96 56" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;width:120px;height:70px;top:14%;left:4%;position:absolute">
+                <rect x="24" y="8"  width="24" height="8"  fill="#FFFFFF"/>
+                <rect x="40" y="0"  width="16" height="8"  fill="#FFFFFF"/>
+                <rect x="16" y="16" width="64" height="8"  fill="#FFFFFF"/>
+                <rect x="8"  y="24" width="80" height="8"  fill="#FFFFFF"/>
+                <rect x="8"  y="32" width="80" height="8"  fill="#FFFFFF"/>
+                <rect x="16" y="40" width="64" height="8"  fill="#FFFFFF"/>
+                <rect x="16" y="40" width="64" height="4"  fill="#D8EEFF"/>
+            </svg>
+
+            <!-- Pixel Cloud 2 (right) -->
+            <svg class="px-sprite px-cloud-2" viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;width:100px;height:60px;top:20%;right:12%;position:absolute">
+                <rect x="16" y="8"  width="16" height="8"  fill="#FFFFFF"/>
+                <rect x="24" y="0"  width="16" height="8"  fill="#FFFFFF"/>
+                <rect x="8"  y="16" width="64" height="8"  fill="#FFFFFF"/>
+                <rect x="0"  y="24" width="80" height="8"  fill="#FFFFFF"/>
+                <rect x="8"  y="32" width="64" height="8"  fill="#FFFFFF"/>
+                <rect x="8"  y="36" width="64" height="4"  fill="#D8EEFF"/>
+            </svg>
+
+            <!-- Pixel Cloud 3 (center-top) -->
+            <svg class="px-sprite px-cloud-3" viewBox="0 0 64 40" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;width:80px;height:50px;top:6%;left:38%;position:absolute">
+                <rect x="8"  y="8"  width="16" height="8"  fill="#FFFFFF"/>
+                <rect x="0"  y="16" width="64" height="8"  fill="#FFFFFF"/>
+                <rect x="0"  y="24" width="64" height="8"  fill="#FFFFFF"/>
+                <rect x="8"  y="28" width="48" height="4"  fill="#D8EEFF"/>
+            </svg>
+
+            <!-- Left Pixel Tree -->
+            <svg class="px-sprite px-tree-1" viewBox="0 0 56 96" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;width:56px;height:96px;bottom:36px;left:2%;position:absolute">
+                <rect x="20" y="0"  width="16" height="8"  fill="#1a8822"/>
+                <rect x="12" y="8"  width="32" height="8"  fill="#22aa33"/>
+                <rect x="8"  y="16" width="40" height="8"  fill="#1a8822"/>
+                <rect x="4"  y="24" width="48" height="8"  fill="#22aa33"/>
+                <rect x="4"  y="32" width="48" height="8"  fill="#1a8822"/>
+                <rect x="8"  y="40" width="40" height="8"  fill="#33cc44"/>
+                <rect x="12" y="48" width="32" height="8"  fill="#22aa33"/>
+                <!-- Light spots -->
+                <rect x="12" y="16" width="8"  height="4"  fill="#44dd55"/>
+                <rect x="32" y="24" width="8"  height="4"  fill="#44dd55"/>
+                <rect x="16" y="36" width="8"  height="4"  fill="#44dd55"/>
+                <!-- Trunk -->
+                <rect x="20" y="56" width="16" height="8"  fill="#8B4513"/>
+                <rect x="20" y="64" width="16" height="8"  fill="#7a3d10"/>
+                <rect x="20" y="72" width="16" height="8"  fill="#8B4513"/>
+                <rect x="16" y="80" width="24" height="8"  fill="#6b3310"/>
+            </svg>
+
+            <!-- Right Pixel Tree (mirrored) -->
+            <svg class="px-sprite px-tree-2" viewBox="0 0 56 96" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;width:56px;height:96px;bottom:36px;right:3%;position:absolute;transform:scaleX(-1)">
+                <rect x="20" y="0"  width="16" height="8"  fill="#1a8822"/>
+                <rect x="12" y="8"  width="32" height="8"  fill="#22aa33"/>
+                <rect x="8"  y="16" width="40" height="8"  fill="#1a8822"/>
+                <rect x="4"  y="24" width="48" height="8"  fill="#22aa33"/>
+                <rect x="4"  y="32" width="48" height="8"  fill="#1a8822"/>
+                <rect x="8"  y="40" width="40" height="8"  fill="#33cc44"/>
+                <rect x="12" y="48" width="32" height="8"  fill="#22aa33"/>
+                <rect x="12" y="20" width="8"  height="4"  fill="#44dd55"/>
+                <rect x="28" y="32" width="8"  height="4"  fill="#44dd55"/>
+                <rect x="20" y="40" width="8"  height="4"  fill="#44dd55"/>
+                <rect x="20" y="56" width="16" height="8"  fill="#8B4513"/>
+                <rect x="20" y="64" width="16" height="8"  fill="#7a3d10"/>
+                <rect x="20" y="72" width="16" height="8"  fill="#8B4513"/>
+                <rect x="16" y="80" width="24" height="8"  fill="#6b3310"/>
+            </svg>
+
+            <!-- Pixel Mushroom 1 -->
+            <svg class="px-sprite px-mushroom-1" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;width:40px;height:48px;bottom:36px;left:18%;position:absolute;animation:pxWorldBob 10s linear infinite">
+                <rect x="4"  y="0"  width="32" height="8"  fill="#CC2222"/>
+                <rect x="0"  y="8"  width="40" height="8"  fill="#EE3333"/>
+                <rect x="0"  y="16" width="40" height="8"  fill="#CC2222"/>
+                <rect x="0"  y="24" width="40" height="4"  fill="#AA1111"/>
+                <rect x="4"  y="8"  width="8"  height="8"  fill="#FFFFFF"/>
+                <rect x="24" y="12" width="8"  height="8"  fill="#FFFFFF"/>
+                <rect x="14" y="20" width="6"  height="4"  fill="#FFFFFF"/>
+                <rect x="12" y="28" width="16" height="4"  fill="#EEEECC"/>
+                <rect x="10" y="32" width="20" height="4"  fill="#DDDDAA"/>
+                <rect x="10" y="36" width="20" height="4"  fill="#EEEECC"/>
+                <rect x="8"  y="40" width="24" height="4"  fill="#CCCCAA"/>
+                <rect x="8"  y="44" width="24" height="4"  fill="#BBBB99"/>
+            </svg>
+
+            <!-- Pixel Mushroom 2 -->
+            <svg class="px-sprite px-mushroom-2" viewBox="0 0 32 40" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;width:32px;height:40px;bottom:36px;right:20%;position:absolute;animation:pxWorldBob 12s linear infinite;animation-delay:2s">
+                <rect x="4"  y="0"  width="24" height="8"  fill="#8822CC"/>
+                <rect x="0"  y="8"  width="32" height="8"  fill="#AA33EE"/>
+                <rect x="0"  y="16" width="32" height="8"  fill="#8822CC"/>
+                <rect x="0"  y="24" width="32" height="4"  fill="#661199"/>
+                <rect x="4"  y="8"  width="6"  height="6"  fill="#EECCFF"/>
+                <rect x="20" y="10" width="6"  height="6"  fill="#EECCFF"/>
+                <rect x="10" y="28" width="12" height="4"  fill="#EEEECC"/>
+                <rect x="8"  y="32" width="16" height="4"  fill="#DDDDAA"/>
+                <rect x="6"  y="36" width="20" height="4"  fill="#BBBB99"/>
+            </svg>
+
+            <!-- Pixel Flower 1 -->
+            <svg class="px-sprite px-flower-1" viewBox="0 0 32 44" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;width:28px;height:38px;bottom:36px;left:34%;position:absolute;animation:pxWorldBob 8s linear infinite;animation-delay:1s">
+                <rect x="12" y="0"  width="8"  height="8"  fill="#FF88CC"/>
+                <rect x="12" y="20" width="8"  height="8"  fill="#FF88CC"/>
+                <rect x="0"  y="10" width="8"  height="8"  fill="#FF88CC"/>
+                <rect x="24" y="10" width="8"  height="8"  fill="#FF88CC"/>
+                <rect x="4"  y="2"  width="6"  height="6"  fill="#FF66BB"/>
+                <rect x="22" y="2"  width="6"  height="6"  fill="#FF66BB"/>
+                <rect x="4"  y="22" width="6"  height="6"  fill="#FF66BB"/>
+                <rect x="22" y="22" width="6"  height="6"  fill="#FF66BB"/>
+                <rect x="10" y="10" width="12" height="12" fill="#FFDD00"/>
+                <rect x="12" y="12" width="8"  height="8"  fill="#FFCC00"/>
+                <rect x="14" y="30" width="4"  height="8"  fill="#33AA22"/>
+                <rect x="8"  y="36" width="16" height="4"  fill="#33AA22"/>
+            </svg>
+
+            <!-- Pixel Flower 2 -->
+            <svg class="px-sprite px-flower-2" viewBox="0 0 28 40" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;width:24px;height:34px;bottom:36px;left:48%;position:absolute;animation:pxWorldBob 9s linear infinite;animation-delay:3.5s">
+                <rect x="10" y="0"  width="8"  height="6"  fill="#FFAA00"/>
+                <rect x="10" y="18" width="8"  height="6"  fill="#FFAA00"/>
+                <rect x="0"  y="8"  width="8"  height="6"  fill="#FFAA00"/>
+                <rect x="20" y="8"  width="8"  height="6"  fill="#FFAA00"/>
+                <rect x="3"  y="1"  width="6"  height="5"  fill="#FF7700"/>
+                <rect x="19" y="1"  width="6"  height="5"  fill="#FF7700"/>
+                <rect x="9"  y="8"  width="10" height="10" fill="#FFFFFF"/>
+                <rect x="11" y="10" width="6"  height="6"  fill="#FFEECC"/>
+                <rect x="12" y="28" width="4"  height="8"  fill="#33AA22"/>
+            </svg>
+
+            <!-- Pixel Flower 3 -->
+            <svg class="px-sprite px-flower-3" viewBox="0 0 28 38" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;width:22px;height:30px;bottom:36px;right:36%;position:absolute;animation:pxWorldBob 7s linear infinite;animation-delay:5s">
+                <rect x="10" y="0"  width="8"  height="6"  fill="#44CCFF"/>
+                <rect x="10" y="18" width="8"  height="6"  fill="#44CCFF"/>
+                <rect x="0"  y="8"  width="8"  height="6"  fill="#44CCFF"/>
+                <rect x="20" y="8"  width="8"  height="6"  fill="#44CCFF"/>
+                <rect x="9"  y="8"  width="10" height="10" fill="#FFDD00"/>
+                <rect x="12" y="26" width="4"  height="8"  fill="#22AA33"/>
+            </svg>
+
+            <!-- Pixel Coins floating -->
+            <svg class="px-sprite px-coin-1" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;width:24px;height:24px;top:38%;left:7%;position:absolute;animation:pxWorldBob 9s linear infinite;animation-delay:1.5s">
+                <rect x="6"  y="0"  width="8"  height="4"  fill="#FFDD00"/>
+                <rect x="4"  y="4"  width="12" height="4"  fill="#FFE84D"/>
+                <rect x="0"  y="8"  width="20" height="4"  fill="#FFCC00"/>
+                <rect x="4"  y="12" width="12" height="4"  fill="#FFE84D"/>
+                <rect x="6"  y="16" width="8"  height="4"  fill="#FFDD00"/>
+                <rect x="6"  y="0"  width="8"  height="2"  fill="#AA7700"/>
+                <rect x="6"  y="18" width="8"  height="2"  fill="#AA7700"/>
+            </svg>
+            <svg class="px-sprite px-coin-2" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;width:20px;height:20px;top:52%;right:9%;position:absolute;animation:pxWorldBob 11s linear infinite;animation-delay:4s">
+                <rect x="6"  y="0"  width="8"  height="4"  fill="#FFDD00"/>
+                <rect x="4"  y="4"  width="12" height="4"  fill="#FFE84D"/>
+                <rect x="0"  y="8"  width="20" height="4"  fill="#FFCC00"/>
+                <rect x="4"  y="12" width="12" height="4"  fill="#FFE84D"/>
+                <rect x="6"  y="16" width="8"  height="4"  fill="#FFDD00"/>
+                <rect x="6"  y="0"  width="8"  height="2"  fill="#AA7700"/>
+                <rect x="6"  y="18" width="8"  height="2"  fill="#AA7700"/>
+            </svg>
+
+            <!-- Pixel Stars -->
+            <div class="px-star px-star-1" style="top:16%;left:27%;animation:pixelTwinkle 8s steps(10) infinite">★</div>
+            <div class="px-star px-star-2" style="top:28%;right:28%;animation:pixelTwinkle 10s steps(10) infinite;animation-delay:2.5s">✦</div>
+            <div class="px-star px-star-3" style="top:42%;left:14%;animation:pixelTwinkle 7s steps(10) infinite;animation-delay:4s;color:#ff88cc">★</div>
+            <div class="px-star" style="top:10%;left:55%;animation:pixelTwinkle 9s steps(10) infinite;animation-delay:1s;color:#44ccff;font-size:.9rem">✦</div>
+            <div class="px-star" style="top:60%;right:22%;animation:pixelTwinkle 11s steps(10) infinite;animation-delay:6s;color:#88ff44;font-size:1rem">★</div>
+
+            <!-- Pixel Ground -->
+            <div class="px-ground"></div>
+        </div>
+        <div class="setup-wizard">
+            <div class="wizard-brand">
+                <span class="brand-icon">
+                    <svg viewBox="0 0 28 28" width="28" height="28" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated" aria-hidden="true">
+                        <!-- Pixel paw: body -->
+                        <rect x="8"  y="10" width="12" height="12" fill="currentColor"/>
+                        <rect x="6"  y="12" width="16" height="8"  fill="currentColor"/>
+                        <!-- Pixel paw: toes -->
+                        <rect x="4"  y="6"  width="6"  height="6"  fill="currentColor"/>
+                        <rect x="11" y="4"  width="6"  height="6"  fill="currentColor"/>
+                        <rect x="18" y="6"  width="6"  height="6"  fill="currentColor"/>
+                    </svg>
+                </span>
+                <h1>PetPal</h1>
+                <p>Your Virtual Pet Companion</p>
+            </div>
+
+            <!-- Progress steps -->
+            <div class="setup-progress" aria-label="Setup steps">
+                <div class="progress-step active" id="prog1">
+                    <div class="step-dot">1</div>
+                    <div class="step-label">Choose Pet</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" id="prog2">
+                    <div class="step-dot">2</div>
+                    <div class="step-label">Customize</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" id="prog3">
+                    <div class="step-dot">3</div>
+                    <div class="step-label">Name</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Pet Type -->
+            <div id="wizardStep1" class="wizard-step active">
+                <h2 class="step-title">Choose Your Pet</h2>
+                <p class="step-subtitle">Pick the companion that speaks to you.</p>
+                <div class="pet-type-grid" id="petTypeGrid" role="radiogroup" aria-label="Select pet type">
+                    <!-- populated by JS -->
+                </div>
+                <div class="wizard-nav">
+                    <div></div>
+                    <button id="toStep2" class="btn btn-primary" disabled>Next →</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Color + Personality -->
+            <div id="wizardStep2" class="wizard-step">
+                <h2 class="step-title">Customize Your Pet</h2>
+                <p class="step-subtitle">Choose a color and personality.</p>
+
+                <div class="customize-section">
+                    <h3 class="section-label">Color</h3>
+                    <div class="color-swatches" id="colorSwatches" role="radiogroup" aria-label="Select color">
+                        <!-- populated by JS -->
+                    </div>
+                </div>
+
+                <div class="customize-section">
+                    <h3 class="section-label">Personality</h3>
+                    <div class="personality-grid" id="personalityGrid" role="radiogroup" aria-label="Select personality">
+                        <!-- populated by JS -->
+                    </div>
+                </div>
+
+                <div class="wizard-nav">
+                    <button id="backToStep1" class="btn btn-ghost">← Back</button>
+                    <button id="toStep3" class="btn btn-primary" disabled>Next →</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Name + Preview -->
+            <div id="wizardStep3" class="wizard-step">
+                <h2 class="step-title">Name Your Pet</h2>
+                <p class="step-subtitle">Give your companion a memorable name.</p>
+
+                <div class="name-preview-area">
+                    <div class="preview-pet-card" id="previewCard">
+                        <div class="preview-aura" id="previewAura"></div>
+                        <div class="preview-emoji" id="previewEmoji"></div>
+                        <div class="preview-badge" id="previewBadge"></div>
+                    </div>
+                    <div class="preview-details">
+                        <div id="previewInfo" class="preview-info"></div>
+                    </div>
+                </div>
+
+                <div class="name-input-group">
+                    <div class="name-input-wrap">
+                        <input type="text" id="petNameInput" class="name-input" placeholder="Enter a name…"
+                               maxlength="25" autocomplete="off" aria-label="Pet name">
+                        <span id="nameCharCount" class="char-counter">0/20</span>
+                    </div>
+                    <div id="nameError" class="input-error" role="alert"></div>
+                </div>
+
+                <div class="wizard-nav">
+                    <button id="backToStep2" class="btn btn-ghost">← Back</button>
+                    <button id="createPetBtn" class="btn btn-success btn-large">Create Pet</button>
+                </div>
+            </div>
+
+            <!-- Load saved game notice (shown when save detected) -->
+            <div id="savedGameBanner" class="saved-banner" style="display:none">
+                <div class="saved-banner-content">
+                    <span>A saved game was found.</span>
+                    <button id="loadSavedBtn" class="btn btn-secondary btn-sm">Continue</button>
+                    <button id="ignoreSavedBtn" class="btn btn-ghost btn-sm">New Game</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         GAME DASHBOARD
+    ════════════════════════════════════════════════ -->
+    <section id="gameScreen" class="screen">
+
+        <!-- ── Pixel World Background Layer ── -->
+        <div class="game-world-bg" aria-hidden="true">
+            <svg class="px-cloud-g1" viewBox="0 0 96 56" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;width:110px;height:65px;opacity:.85">
+                <rect x="24" y="8"  width="24" height="8"  fill="#FFFFFF"/>
+                <rect x="40" y="0"  width="16" height="8"  fill="#FFFFFF"/>
+                <rect x="16" y="16" width="64" height="8"  fill="#FFFFFF"/>
+                <rect x="8"  y="24" width="80" height="8"  fill="#FFFFFF"/>
+                <rect x="16" y="32" width="64" height="8"  fill="#FFFFFF"/>
+                <rect x="16" y="36" width="64" height="4"  fill="#D8EEFF"/>
+            </svg>
+            <svg class="px-cloud-g2" viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;width:90px;height:54px;opacity:.85">
+                <rect x="16" y="8"  width="16" height="8"  fill="#FFFFFF"/>
+                <rect x="24" y="0"  width="16" height="8"  fill="#FFFFFF"/>
+                <rect x="8"  y="16" width="64" height="8"  fill="#FFFFFF"/>
+                <rect x="0"  y="24" width="80" height="8"  fill="#FFFFFF"/>
+                <rect x="8"  y="32" width="64" height="4"  fill="#D8EEFF"/>
+            </svg>
+            <!-- Pixel stars -->
+            <div class="game-px-star1" style="font-size:1.1rem;color:#ffdd00;text-shadow:1px 1px 0 #886600;font-family:sans-serif;user-select:none">★</div>
+            <div class="game-px-star2" style="font-size:.9rem;color:#ff88cc;text-shadow:1px 1px 0 #883366;font-family:sans-serif;user-select:none">✦</div>
+            <!-- Pixel grass strip -->
+            <div class="game-px-grass"></div>
+        </div>
+
+        <!-- ── Header ── -->
+        <header class="game-header">
+            <div class="header-brand">
+                <span class="brand-mark">
+                    <svg viewBox="0 0 16 16" width="16" height="16" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated" aria-hidden="true">
+                        <rect x="5"  y="6"  width="6"  height="8"  fill="currentColor"/>
+                        <rect x="3"  y="8"  width="10" height="4"  fill="currentColor"/>
+                        <rect x="2"  y="3"  width="3"  height="4"  fill="currentColor"/>
+                        <rect x="6"  y="2"  width="4"  height="4"  fill="currentColor"/>
+                        <rect x="11" y="3"  width="3"  height="4"  fill="currentColor"/>
+                    </svg>
+                </span>
+                <span>PetPal</span>
+            </div>
+
+            <div class="header-pet-info">
+                <span class="pet-name-chip" id="headerPetName">—</span>
+                <span class="level-chip" id="headerLevel">Lv.1</span>
+            </div>
+
+            <div class="header-right">
+                <div class="coins-badge" id="coinsBadge">
+                    <!-- Pixel coin icon -->
+                    <svg viewBox="0 0 14 14" width="14" height="14" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated" class="icon" aria-hidden="true">
+                        <rect x="4" y="0" width="6" height="2" fill="#553300"/>
+                        <rect x="2" y="2" width="10" height="2" fill="#553300"/>
+                        <rect x="0" y="4" width="14" height="6" fill="#553300"/>
+                        <rect x="2" y="10" width="10" height="2" fill="#553300"/>
+                        <rect x="4" y="12" width="6" height="2" fill="#553300"/>
+                    </svg>
+                    <span class="coins-amount" id="coinsDisplay">250</span>
+                </div>
+                <button id="helpBtn" class="icon-btn" aria-label="Help" title="Help"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="4" y="1" width="8" height="2" fill="currentColor"/><rect x="10" y="3" width="4" height="4" fill="currentColor"/><rect x="6" y="7" width="6" height="2" fill="currentColor"/><rect x="6" y="9" width="4" height="3" fill="currentColor"/><rect x="7" y="13" width="2" height="3" fill="currentColor"/></svg></button>
+                <button id="saveBtn"  class="icon-btn" aria-label="Save game" title="Save game"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="6" y="1" width="4" height="8" fill="currentColor"/><rect x="4" y="7" width="8" height="2" fill="currentColor"/><rect x="5" y="9" width="6" height="2" fill="currentColor"/><rect x="7" y="11" width="2" height="2" fill="currentColor"/><rect x="0" y="13" width="16" height="3" fill="currentColor"/></svg></button>
+                <button id="resetBtn" class="icon-btn icon-btn-danger" aria-label="New game" title="New game"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="5" y="0" width="6" height="2" fill="currentColor"/><rect x="11" y="2" width="4" height="2" fill="currentColor"/><rect x="13" y="4" width="2" height="6" fill="currentColor"/><rect x="10" y="10" width="4" height="2" fill="currentColor"/><rect x="4" y="12" width="8" height="2" fill="currentColor"/><rect x="2" y="10" width="3" height="2" fill="currentColor"/><rect x="1" y="4" width="2" height="6" fill="currentColor"/><rect x="3" y="2" width="4" height="2" fill="currentColor"/><rect x="0" y="2" width="4" height="5" fill="currentColor"/><rect x="2" y="0" width="4" height="2" fill="currentColor"/></svg></button>
+            </div>
+        </header>
+
+        <!-- ── Main Dashboard ── -->
+        <main class="dashboard">
+
+            <!-- LEFT: Pet Display -->
+            <aside class="pet-panel">
+                <div class="pet-visual-card">
+                    <div class="pet-aura-wrap">
+                        <div class="pet-aura" id="petAura"></div>
+                        <div class="pet-emoji-display" id="petEmojiDisplay"></div>
+                        <div class="emotion-bubble" id="emotionBubble"></div>
+                    </div>
+                    <div class="pet-display-info">
+                        <h2 class="pet-display-name" id="petDisplayName">—</h2>
+                        <p class="pet-mood-text" id="petMoodText">—</p>
+                        <div class="sick-badge" id="sickBadge" style="display:none">Sick — visit the vet</div>
+                    </div>
+                    <!-- Pixel ground strip with flowers -->
+                    <div class="pet-ground-strip" aria-hidden="true">
+                        <span class="gs-flower"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges"><rect x="7" y="4" width="2" height="2" fill="#f472b6"/><rect x="7" y="9" width="2" height="2" fill="#f472b6"/><rect x="4" y="7" width="3" height="2" fill="#f472b6"/><rect x="9" y="7" width="3" height="2" fill="#f472b6"/><rect x="5" y="5" width="2" height="2" fill="#f472b6"/><rect x="9" y="5" width="2" height="2" fill="#f472b6"/><rect x="5" y="9" width="2" height="2" fill="#f472b6"/><rect x="9" y="9" width="2" height="2" fill="#f472b6"/><rect x="7" y="7" width="2" height="2" fill="#fbbf24"/><rect x="7" y="11" width="2" height="5" fill="#22c55e"/></svg></span>
+                        <span class="gs-flower"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges"><rect x="7" y="5" width="2" height="11" fill="#22c55e"/><rect x="3" y="9" width="4" height="2" fill="#22c55e"/><rect x="4" y="7" width="3" height="2" fill="#22c55e"/><rect x="5" y="5" width="2" height="2" fill="#22c55e"/><rect x="9" y="10" width="4" height="2" fill="#4ade80"/><rect x="9" y="8" width="3" height="2" fill="#4ade80"/><rect x="9" y="6" width="2" height="2" fill="#4ade80"/></svg></span>
+                        <span class="gs-flower"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges"><rect x="7" y="4" width="2" height="2" fill="#facc15"/><rect x="7" y="9" width="2" height="2" fill="#facc15"/><rect x="4" y="7" width="3" height="2" fill="#facc15"/><rect x="9" y="7" width="3" height="2" fill="#facc15"/><rect x="5" y="5" width="2" height="2" fill="#facc15"/><rect x="9" y="5" width="2" height="2" fill="#facc15"/><rect x="5" y="9" width="2" height="2" fill="#facc15"/><rect x="9" y="9" width="2" height="2" fill="#facc15"/><rect x="7" y="7" width="2" height="2" fill="#fb923c"/><rect x="7" y="11" width="2" height="5" fill="#22c55e"/></svg></span>
+                        <span class="gs-flower"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges"><rect x="7" y="5" width="2" height="11" fill="#22c55e"/><rect x="3" y="9" width="4" height="2" fill="#22c55e"/><rect x="4" y="7" width="3" height="2" fill="#22c55e"/><rect x="5" y="5" width="2" height="2" fill="#22c55e"/><rect x="9" y="10" width="4" height="2" fill="#4ade80"/><rect x="9" y="8" width="3" height="2" fill="#4ade80"/><rect x="9" y="6" width="2" height="2" fill="#4ade80"/></svg></span>
+                        <span class="gs-flower"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges"><rect x="7" y="4" width="2" height="2" fill="#f472b6"/><rect x="7" y="9" width="2" height="2" fill="#f472b6"/><rect x="4" y="7" width="3" height="2" fill="#f472b6"/><rect x="9" y="7" width="3" height="2" fill="#f472b6"/><rect x="5" y="5" width="2" height="2" fill="#f472b6"/><rect x="9" y="5" width="2" height="2" fill="#f472b6"/><rect x="5" y="9" width="2" height="2" fill="#f472b6"/><rect x="9" y="9" width="2" height="2" fill="#f472b6"/><rect x="7" y="7" width="2" height="2" fill="#fbbf24"/><rect x="7" y="11" width="2" height="5" fill="#22c55e"/></svg></span>
+                    </div>
+                </div>
+
+                <!-- XP Bar -->
+                <div class="xp-card">
+                    <div class="xp-header">
+                        <span class="xp-level-label">Level <span id="xpLevel">1</span></span>
+                        <span class="xp-count" id="xpCount">0 / 100 XP</span>
+                    </div>
+                    <div class="xp-bar-bg" role="progressbar" aria-label="XP progress">
+                        <div class="xp-bar-fill" id="xpBarFill" style="width:0%"></div>
+                    </div>
+                    <div id="levelUpAnim" class="level-up-flash" style="display:none">LEVEL UP</div>
+                </div>
+
+                <!-- Stat Bars -->
+                <div class="stats-card">
+                    <h3 class="card-title">Pet Stats</h3>
+                    <div class="stats-list" id="statsList">
+                        <!-- Hunger -->
+                        <div class="stat-row">
+                            <div class="stat-icon-label">
+                                <span class="stat-icon" style="color:var(--stat-hunger)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="3" y="0" width="2" height="2" fill="currentColor"/><rect x="7" y="0" width="2" height="2" fill="currentColor"/><rect x="11" y="0" width="2" height="2" fill="currentColor"/><rect x="0" y="3" width="16" height="2" fill="currentColor"/><rect x="1" y="5" width="14" height="2" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/><rect x="3" y="9" width="10" height="2" fill="currentColor"/><rect x="4" y="11" width="8" height="2" fill="currentColor"/><rect x="5" y="13" width="6" height="2" fill="currentColor"/></svg></span>
+                                <span class="stat-name">Hunger</span>
+                            </div>
+                            <div class="stat-bar-wrap">
+                                <div class="stat-bar-bg">
+                                    <div class="stat-bar-fill" id="hungerFill" style="--bar-color:#f97316;width:100%"></div>
+                                </div>
+                            </div>
+                            <span class="stat-val" id="hungerVal">100</span>
+                        </div>
+                        <!-- Happiness -->
+                        <div class="stat-row">
+                            <div class="stat-icon-label">
+                                <span class="stat-icon" style="color:var(--stat-happiness)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="2" y="2" width="4" height="2" fill="currentColor"/><rect x="9" y="2" width="4" height="2" fill="currentColor"/><rect x="0" y="4" width="16" height="2" fill="currentColor"/><rect x="1" y="6" width="13" height="2" fill="currentColor"/><rect x="3" y="8" width="10" height="2" fill="currentColor"/><rect x="5" y="10" width="6" height="2" fill="currentColor"/><rect x="7" y="12" width="2" height="2" fill="currentColor"/></svg></span>
+                                <span class="stat-name">Happiness</span>
+                            </div>
+                            <div class="stat-bar-wrap">
+                                <div class="stat-bar-bg">
+                                    <div class="stat-bar-fill" id="happinessFill" style="--bar-color:#ec4899;width:100%"></div>
+                                </div>
+                            </div>
+                            <span class="stat-val" id="happinessVal">100</span>
+                        </div>
+                        <!-- Health -->
+                        <div class="stat-row">
+                            <div class="stat-icon-label">
+                                <span class="stat-icon" style="color:var(--stat-health)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="4" y="0" width="8" height="2" fill="currentColor"/><rect x="2" y="2" width="12" height="2" fill="currentColor"/><rect x="1" y="4" width="14" height="6" fill="currentColor"/><rect x="2" y="10" width="12" height="2" fill="currentColor"/><rect x="4" y="12" width="8" height="2" fill="currentColor"/><rect x="6" y="14" width="4" height="2" fill="currentColor"/></svg></span>
+                                <span class="stat-name">Health</span>
+                            </div>
+                            <div class="stat-bar-wrap">
+                                <div class="stat-bar-bg">
+                                    <div class="stat-bar-fill" id="healthFill" style="--bar-color:#10b981;width:100%"></div>
+                                </div>
+                            </div>
+                            <span class="stat-val" id="healthVal">100</span>
+                        </div>
+                        <!-- Energy -->
+                        <div class="stat-row">
+                            <div class="stat-icon-label">
+                                <span class="stat-icon" style="color:var(--stat-energy)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="8" y="0" width="5" height="6" fill="currentColor"/><rect x="3" y="5" width="9" height="2" fill="currentColor"/><rect x="3" y="7" width="7" height="2" fill="currentColor"/><rect x="3" y="9" width="5" height="7" fill="currentColor"/></svg></span>
+                                <span class="stat-name">Energy</span>
+                            </div>
+                            <div class="stat-bar-wrap">
+                                <div class="stat-bar-bg">
+                                    <div class="stat-bar-fill" id="energyFill" style="--bar-color:#6366f1;width:100%"></div>
+                                </div>
+                            </div>
+                            <span class="stat-val" id="energyVal">100</span>
+                        </div>
+                        <!-- Cleanliness -->
+                        <div class="stat-row">
+                            <div class="stat-icon-label">
+                                <span class="stat-icon" style="color:var(--stat-cleanliness)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="6" y="1" width="4" height="2" fill="currentColor"/><rect x="4" y="3" width="8" height="2" fill="currentColor"/><rect x="2" y="5" width="12" height="4" fill="currentColor"/><rect x="3" y="9" width="10" height="2" fill="currentColor"/><rect x="5" y="11" width="6" height="2" fill="currentColor"/><rect x="6" y="13" width="4" height="2" fill="currentColor"/></svg></span>
+                                <span class="stat-name">Cleanliness</span>
+                            </div>
+                            <div class="stat-bar-wrap">
+                                <div class="stat-bar-bg">
+                                    <div class="stat-bar-fill" id="cleanlinessFill" style="--bar-color:#06b6d4;width:100%"></div>
+                                </div>
+                            </div>
+                            <span class="stat-val" id="cleanlinessVal">100</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- RIGHT: Actions + Tabs -->
+            <div class="main-panel">
+
+                <!-- Care Actions -->
+                <div class="actions-card">
+                    <h3 class="card-title">Care Actions</h3>
+                    <div class="actions-grid">
+                        <!-- Feed — pixel bowl with steam -->
+                        <button class="action-btn" id="feedBtn" data-action="feed" aria-label="Feed pet (15 coins)">
+                            <div class="action-btn-icon">
+                                <svg viewBox="0 0 16 16" width="22" height="22" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated" aria-hidden="true">
+                                    <rect x="2" y="0" width="2" height="3" fill="currentColor"/>
+                                    <rect x="7" y="1" width="2" height="2" fill="currentColor"/>
+                                    <rect x="12" y="0" width="2" height="3" fill="currentColor"/>
+                                    <rect x="0" y="5" width="16" height="2" fill="currentColor"/>
+                                    <rect x="1" y="7" width="14" height="2" fill="currentColor"/>
+                                    <rect x="2" y="9" width="12" height="2" fill="currentColor"/>
+                                    <rect x="3" y="11" width="10" height="2" fill="currentColor"/>
+                                    <rect x="4" y="13" width="8" height="2" fill="currentColor"/>
+                                    <rect x="5" y="15" width="6" height="1" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="action-btn-label">Feed</div>
+                            <div class="action-btn-cost">15</div>
+                        </button>
+                        <!-- Play — pixel star -->
+                        <button class="action-btn" id="playBtn" data-action="play" aria-label="Play with pet (10 coins)">
+                            <div class="action-btn-icon">
+                                <svg viewBox="0 0 16 16" width="22" height="22" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated" aria-hidden="true">
+                                    <rect x="7" y="0" width="2" height="3" fill="currentColor"/>
+                                    <rect x="5" y="3" width="6" height="3" fill="currentColor"/>
+                                    <rect x="0" y="5" width="16" height="3" fill="currentColor"/>
+                                    <rect x="3" y="8" width="10" height="3" fill="currentColor"/>
+                                    <rect x="2" y="10" width="4" height="5" fill="currentColor"/>
+                                    <rect x="10" y="10" width="4" height="5" fill="currentColor"/>
+                                    <rect x="4" y="13" width="8" height="2" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="action-btn-label">Play</div>
+                            <div class="action-btn-cost">10</div>
+                        </button>
+                        <!-- Sleep — pixel moon + Z -->
+                        <button class="action-btn" id="sleepBtn" data-action="sleep" aria-label="Put pet to sleep (free)">
+                            <div class="action-btn-icon">
+                                <svg viewBox="0 0 16 16" width="22" height="22" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated" aria-hidden="true">
+                                    <rect x="4"  y="0"  width="8" height="2" fill="currentColor"/>
+                                    <rect x="2"  y="2"  width="4" height="2" fill="currentColor"/>
+                                    <rect x="0"  y="4"  width="4" height="6" fill="currentColor"/>
+                                    <rect x="2"  y="10" width="4" height="2" fill="currentColor"/>
+                                    <rect x="4"  y="12" width="8" height="2" fill="currentColor"/>
+                                    <rect x="10" y="0"  width="4" height="2" fill="currentColor"/>
+                                    <rect x="12" y="2"  width="2" height="2" fill="currentColor"/>
+                                    <rect x="12" y="4"  width="2" height="2" fill="currentColor"/>
+                                    <rect x="10" y="6"  width="4" height="2" fill="currentColor"/>
+                                    <!-- Z -->
+                                    <rect x="11" y="9"  width="4" height="1" fill="currentColor"/>
+                                    <rect x="13" y="10" width="2" height="1" fill="currentColor"/>
+                                    <rect x="11" y="11" width="4" height="1" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="action-btn-label">Sleep</div>
+                            <div class="action-btn-cost free">Free</div>
+                        </button>
+                        <!-- Clean — pixel water drops -->
+                        <button class="action-btn" id="cleanBtn" data-action="clean" aria-label="Clean pet (12 coins)">
+                            <div class="action-btn-icon">
+                                <svg viewBox="0 0 16 16" width="22" height="22" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated" aria-hidden="true">
+                                    <rect x="6"  y="0"  width="4" height="2" fill="currentColor"/>
+                                    <rect x="4"  y="2"  width="8" height="2" fill="currentColor"/>
+                                    <rect x="2"  y="4"  width="12" height="4" fill="currentColor"/>
+                                    <rect x="4"  y="8"  width="8" height="4" fill="currentColor"/>
+                                    <rect x="6"  y="12" width="4" height="2" fill="currentColor"/>
+                                    <!-- second drop -->
+                                    <rect x="11" y="5"  width="2" height="2" fill="currentColor" opacity=".7"/>
+                                    <rect x="10" y="7"  width="4" height="2" fill="currentColor" opacity=".7"/>
+                                    <rect x="11" y="9"  width="2" height="1" fill="currentColor" opacity=".7"/>
+                                    <!-- third drop -->
+                                    <rect x="0"  y="6"  width="2" height="2" fill="currentColor" opacity=".5"/>
+                                    <rect x="0"  y="8"  width="3" height="2" fill="currentColor" opacity=".5"/>
+                                </svg>
+                            </div>
+                            <div class="action-btn-label">Clean</div>
+                            <div class="action-btn-cost">12</div>
+                        </button>
+                        <!-- Vet — pixel heart + cross -->
+                        <button class="action-btn action-btn-vet" id="vetBtn" data-action="vet" aria-label="Vet visit (35 coins)">
+                            <div class="action-btn-icon">
+                                <svg viewBox="0 0 16 16" width="22" height="22" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated" aria-hidden="true">
+                                    <rect x="2"  y="2"  width="4" height="4" fill="currentColor"/>
+                                    <rect x="10" y="2"  width="4" height="4" fill="currentColor"/>
+                                    <rect x="0"  y="4"  width="16" height="6" fill="currentColor"/>
+                                    <rect x="2"  y="10" width="12" height="2" fill="currentColor"/>
+                                    <rect x="4"  y="12" width="8" height="2" fill="currentColor"/>
+                                    <rect x="6"  y="14" width="4" height="2" fill="currentColor"/>
+                                    <!-- white cross -->
+                                    <rect x="7"  y="5"  width="2" height="6" fill="white"/>
+                                    <rect x="5"  y="7"  width="6" height="2" fill="white"/>
+                                </svg>
+                            </div>
+                            <div class="action-btn-label">Vet Visit</div>
+                            <div class="action-btn-cost">35</div>
+                        </button>
+                    </div>
+                    <p class="keyboard-hint">Keyboard: F=Feed, P=Play, S=Sleep, C=Clean, V=Vet</p>
+                </div>
+
+                <!-- Tab Panel -->
+                <div class="tab-panel-card">
+                    <div class="tab-nav" role="tablist">
+                        <button class="tab-btn active" data-tab="finance" role="tab" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" class="icon" aria-hidden="true"><rect x="0" y="2" width="14" height="2" fill="currentColor"/><rect x="0" y="4" width="16" height="10" fill="currentColor"/></svg> Finance</button>
+                        <button class="tab-btn" data-tab="growth"  role="tab" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" class="icon" aria-hidden="true"><rect x="0" y="13" width="5" height="3" fill="currentColor"/><rect x="4" y="9" width="5" height="3" fill="currentColor"/><rect x="8" y="5" width="5" height="3" fill="currentColor"/><rect x="12" y="1" width="4" height="3" fill="currentColor"/><rect x="12" y="1" width="2" height="6" fill="currentColor"/><rect x="10" y="1" width="6" height="2" fill="currentColor"/></svg> Growth</button>
+                        <button class="tab-btn" data-tab="chores"  role="tab" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" class="icon" aria-hidden="true"><rect x="0" y="0" width="12" height="2" fill="currentColor"/><rect x="0" y="0" width="2" height="14" fill="currentColor"/><rect x="10" y="2" width="2" height="12" fill="currentColor"/><rect x="0" y="12" width="12" height="2" fill="currentColor"/><rect x="2" y="8" width="2" height="4" fill="currentColor"/><rect x="4" y="10" width="2" height="2" fill="currentColor"/><rect x="6" y="5" width="2" height="5" fill="currentColor"/><rect x="8" y="3" width="2" height="4" fill="currentColor"/><rect x="13" y="2" width="3" height="2" fill="currentColor"/><rect x="13" y="6" width="3" height="2" fill="currentColor"/><rect x="13" y="10" width="3" height="2" fill="currentColor"/></svg> Chores</button>
+                        <button class="tab-btn" data-tab="history" role="tab" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" class="icon" aria-hidden="true"><rect x="4" y="0" width="8" height="2" fill="currentColor"/><rect x="2" y="2" width="2" height="2" fill="currentColor"/><rect x="12" y="2" width="2" height="2" fill="currentColor"/><rect x="0" y="4" width="2" height="8" fill="currentColor"/><rect x="14" y="4" width="2" height="8" fill="currentColor"/><rect x="2" y="12" width="2" height="2" fill="currentColor"/><rect x="12" y="12" width="2" height="2" fill="currentColor"/><rect x="4" y="14" width="8" height="2" fill="currentColor"/><rect x="7" y="4" width="2" height="5" fill="currentColor"/><rect x="9" y="9" width="3" height="2" fill="currentColor"/></svg> History</button>
+                        <button class="tab-btn" data-tab="memories" role="tab" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" class="icon" aria-hidden="true"><rect x="0" y="4" width="16" height="11" fill="currentColor"/><rect x="2" y="2" width="5" height="2" fill="currentColor"/><rect x="12" y="5" width="3" height="3" fill="currentColor"/><rect x="5" y="7" width="6" height="2" fill="currentColor"/><rect x="3" y="9" width="2" height="4" fill="currentColor"/><rect x="11" y="9" width="2" height="4" fill="currentColor"/><rect x="5" y="13" width="6" height="2" fill="currentColor"/></svg> Memories</button>
+                        <button class="tab-btn" data-tab="chat"    role="tab" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" class="icon" aria-hidden="true"><rect x="0" y="1" width="16" height="10" fill="currentColor"/><rect x="1" y="11" width="5" height="2" fill="currentColor"/><rect x="1" y="13" width="3" height="2" fill="currentColor"/></svg> Chat</button>
+                        <button class="tab-btn" data-tab="reports" role="tab" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" class="icon" aria-hidden="true"><rect x="1" y="9" width="3" height="7" fill="currentColor"/><rect x="6" y="5" width="3" height="11" fill="currentColor"/><rect x="11" y="2" width="3" height="14" fill="currentColor"/><rect x="0" y="15" width="16" height="1" fill="currentColor"/></svg> Reports</button>
+                    </div>
+
+                    <!-- Finance Tab -->
+                    <div id="financeTab" class="tab-content active" role="tabpanel">
+                        <div class="finance-summary">
+                            <div class="fin-stat-card">
+                                <div class="fin-stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="5" y="1" width="6" height="2" fill="currentColor"/><rect x="3" y="3" width="10" height="2" fill="currentColor"/><rect x="2" y="5" width="12" height="6" fill="currentColor"/><rect x="3" y="11" width="10" height="2" fill="currentColor"/><rect x="5" y="13" width="6" height="2" fill="currentColor"/></svg></div>
+                                <div class="fin-stat-val" id="finCoins">250</div>
+                                <div class="fin-stat-label">Current Coins</div>
+                            </div>
+                            <div class="fin-stat-card">
+                                <div class="fin-stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="7" y="1" width="2" height="2" fill="currentColor"/><rect x="5" y="3" width="6" height="2" fill="currentColor"/><rect x="3" y="5" width="10" height="2" fill="currentColor"/><rect x="6" y="7" width="4" height="7" fill="currentColor"/></svg></div>
+                                <div class="fin-stat-val" id="finSpent">0</div>
+                                <div class="fin-stat-label">Total Spent</div>
+                            </div>
+                            <div class="fin-stat-card">
+                                <div class="fin-stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="6" y="2" width="4" height="7" fill="currentColor"/><rect x="3" y="9" width="10" height="2" fill="currentColor"/><rect x="5" y="11" width="6" height="2" fill="currentColor"/><rect x="7" y="13" width="2" height="2" fill="currentColor"/></svg></div>
+                                <div class="fin-stat-val" id="finEarned">0</div>
+                                <div class="fin-stat-label">Total Earned</div>
+                            </div>
+                        </div>
+
+                        <h4 class="subsection-title">Spending by Category</h4>
+                        <div class="spending-categories" id="spendingCategories"></div>
+
+                        <h4 class="subsection-title">Recent Transactions</h4>
+                        <div class="transaction-list" id="transactionList"></div>
+                    </div>
+
+                    <!-- Growth Tab -->
+                    <div id="growthTab" class="tab-content" role="tabpanel">
+                        <div class="growth-level-hero">
+                            <div class="growth-level-circle" id="growthLevelCircle">
+                                <span id="growthLevelNum">1</span>
+                            </div>
+                            <div class="growth-level-info">
+                                <div class="growth-level-text">Level <span id="growthLevelText">1</span></div>
+                                <div class="growth-xp-text" id="growthXpText">0 / 100 XP</div>
+                                <div class="growth-xp-bar">
+                                    <div class="growth-xp-fill" id="growthXpFill" style="width:0%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4 class="subsection-title">Badges <span id="badgeCount" class="badge-count-chip">0/12</span></h4>
+                        <div class="badge-grid" id="badgeGrid"></div>
+
+                        <h4 class="subsection-title">Tricks Learned</h4>
+                        <div class="tricks-list" id="tricksList"></div>
+
+                        <h4 class="subsection-title">Personality Profile</h4>
+                        <div class="personality-profile-card">
+                            <div class="care-week-chips" id="careWeekChips"></div>
+                            <div class="traits-list" id="personalityTraits"></div>
+                        </div>
+
+                        <h4 class="subsection-title">Evolution Timeline</h4>
+                        <div class="evolution-timeline" id="evolutionTimeline"></div>
+                    </div>
+
+                    <!-- Chores Tab -->
+                    <div id="choresTab" class="tab-content" role="tabpanel">
+                        <p class="chores-intro">Complete chores to earn coins and XP for your pet!</p>
+                        <div class="chores-list" id="choresList"></div>
+                    </div>
+
+                    <!-- History Tab -->
+                    <div id="historyTab" class="tab-content" role="tabpanel">
+                        <div class="activity-log" id="activityLog"></div>
+                    </div>
+
+                    <!-- Memories Tab -->
+                    <div id="memoriesTab" class="tab-content" role="tabpanel">
+
+                        <div class="scrap-toolbar">
+                            <div class="scrap-search-wrap">
+                                <svg class="scrap-search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="5" y="1" width="5" height="2" fill="currentColor"/><rect x="3" y="3" width="9" height="2" fill="currentColor"/><rect x="2" y="5" width="2" height="4" fill="currentColor"/><rect x="11" y="5" width="2" height="4" fill="currentColor"/><rect x="3" y="9" width="9" height="2" fill="currentColor"/><rect x="5" y="11" width="5" height="2" fill="currentColor"/><rect x="10" y="11" width="2" height="2" fill="currentColor"/><rect x="11" y="12" width="2" height="2" fill="currentColor"/><rect x="12" y="13" width="3" height="3" fill="currentColor"/></svg>
+                                <input type="text" id="scrapSearch" class="scrap-search" placeholder="Search memories..." autocomplete="off">
+                                <button class="scrap-clear-btn" id="scrapSearchClear" aria-label="Clear search" style="display:none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges"><rect x="2" y="2" width="3" height="3" fill="currentColor"/><rect x="10" y="2" width="3" height="3" fill="currentColor"/><rect x="5" y="5" width="6" height="6" fill="currentColor"/><rect x="2" y="10" width="3" height="3" fill="currentColor"/><rect x="10" y="10" width="3" height="3" fill="currentColor"/></svg>
+                                </button>
+                            </div>
+                            <div class="scrap-filters" id="scrapFilters" role="group" aria-label="Filter memories">
+                                <button class="scrap-filter active" data-type="all">All</button>
+                                <button class="scrap-filter" data-type="first">Firsts</button>
+                                <button class="scrap-filter" data-type="milestone">Milestones</button>
+                                <button class="scrap-filter" data-type="streak">Streaks</button>
+                                <button class="scrap-filter" data-type="achievement">Badges</button>
+                                <button class="scrap-filter" data-type="bond">Bond</button>
+                                <button class="scrap-filter" data-type="recovery">Recovery</button>
+                            </div>
+                        </div>
+
+                        <div class="scrap-count" id="scrapCount"></div>
+
+                        <div class="scrap-grid" id="scrapGrid"></div>
+
+                        <div class="scrap-empty" id="scrapEmpty" style="display:none">
+                            <div class="scrap-empty-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="0" y="4" width="16" height="11" fill="currentColor"/><rect x="2" y="2" width="5" height="2" fill="currentColor"/><rect x="12" y="5" width="3" height="3" fill="currentColor"/><rect x="5" y="7" width="6" height="2" fill="currentColor"/><rect x="3" y="9" width="2" height="4" fill="currentColor"/><rect x="11" y="9" width="2" height="4" fill="currentColor"/><rect x="5" y="13" width="6" height="2" fill="currentColor"/></svg>
+                            </div>
+                            <div class="scrap-empty-title" id="scrapEmptyTitle">No memories yet</div>
+                            <div class="scrap-empty-sub" id="scrapEmptySub">Keep playing and caring for your pet. Special moments will appear here automatically.</div>
+                        </div>
+
+                    </div>
+
+                    <!-- Chat Tab -->
+                    <div id="chatTab" class="tab-content" role="tabpanel">
+
+                        <!-- API Key Setup (shown when no key configured) -->
+                        <div id="apiKeySetup" class="api-key-setup" style="display:none">
+                            <div class="api-key-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="5" y="1" width="6" height="2" fill="currentColor"/><rect x="3" y="3" width="10" height="2" fill="currentColor"/><rect x="2" y="5" width="2" height="3" fill="currentColor"/><rect x="12" y="5" width="2" height="3" fill="currentColor"/><rect x="0" y="8" width="16" height="8" fill="currentColor"/></svg></div>
+                            <h4>Connect AI Companion</h4>
+                            <p>Chat with Dr. Paws, your built-in AI pet care advisor — no key required.</p>
+                            <p class="api-key-note">Dr. Paws is powered by a built-in AI. No account or setup needed.</p>
+                            <div class="api-key-input-row">
+                                <input type="password" id="apiKeyInput" class="api-key-input"
+                                       placeholder="" autocomplete="off" spellcheck="false">
+                                <button id="apiKeySaveBtn" class="btn btn-primary btn-sm">Connect</button>
+                            </div>
+                            <div id="apiKeyError" class="validation-error" style="display:none"></div>
+                        </div>
+
+                        <!-- Chat Window (shown after key is set) -->
+                        <div id="chatWindow" class="chat-window" style="display:none">
+                            <div class="chat-header">
+                                <span class="chat-pet-emoji" id="chatPetEmoji"></span>
+                                <div class="chat-pet-info">
+                                    <div class="chat-pet-name" id="chatPetName">—</div>
+                                    <div class="chat-pet-status" id="chatPetStatus">—</div>
+                                    <div class="chat-trait-chips" id="chatTraitChips"></div>
+                                </div>
+                                <button class="chat-clear-btn" id="chatClearBtn" title="Clear chat history" aria-label="Clear chat history"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="5" y="0" width="6" height="3" fill="currentColor"/><rect x="1" y="3" width="14" height="2" fill="currentColor"/><rect x="2" y="5" width="12" height="11" fill="currentColor"/></svg></button>
+                            </div>
+
+                            <div class="chat-messages" id="chatMessages">
+                                <div class="chat-empty">
+                                    <div class="chat-empty-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="0" y="1" width="16" height="10" fill="currentColor"/><rect x="1" y="11" width="5" height="2" fill="currentColor"/><rect x="1" y="13" width="3" height="2" fill="currentColor"/></svg></div>
+                                    <div>Say hello to your pet!</div>
+                                </div>
+                            </div>
+
+                            <div class="typing-indicator" id="typingIndicator" style="display:none">
+                                <div class="typing-bubble">
+                                    <span></span><span></span><span></span>
+                                </div>
+                            </div>
+
+                            <div class="chat-input-row">
+                                <input type="text" id="chatInput" class="chat-input"
+                                       placeholder="Talk to your pet…" maxlength="200" autocomplete="off">
+                                <button id="chatSendBtn" class="chat-send-btn" aria-label="Send message"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="0" y="5" width="2" height="6" fill="currentColor"/><rect x="2" y="3" width="2" height="10" fill="currentColor"/><rect x="4" y="2" width="2" height="12" fill="currentColor"/><rect x="6" y="1" width="2" height="14" fill="currentColor"/><rect x="8" y="0" width="2" height="16" fill="currentColor"/><rect x="10" y="2" width="2" height="12" fill="currentColor"/><rect x="12" y="5" width="2" height="6" fill="currentColor"/></svg></button>
+                            </div>
+                        </div>
+                    </div><!-- /chatTab -->
+
+                    <!-- Reports Tab -->
+                    <div id="reportsTab" class="tab-content reports-tab" role="tabpanel">
+
+                        <!-- Date Filter Bar -->
+                        <div class="report-filter-bar">
+                            <span class="report-filter-label">Period:</span>
+                            <div class="report-filter-btns" role="group" aria-label="Date range filter">
+                                <button class="report-filter-btn" data-days="7">7 Days</button>
+                                <button class="report-filter-btn active" data-days="30">30 Days</button>
+                                <button class="report-filter-btn" data-days="90">90 Days</button>
+                                <button class="report-filter-btn" data-days="0">All Time</button>
+                            </div>
+                        </div>
+
+                        <!-- 1. Expense Report -->
+                        <div class="report-card">
+                            <div class="report-card-hdr">
+                                <span class="report-card-title">Expense Report</span>
+                                <button class="report-dl-btn" data-report="expense"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="6" y="1" width="4" height="8" fill="currentColor"/><rect x="4" y="7" width="8" height="2" fill="currentColor"/><rect x="5" y="9" width="6" height="2" fill="currentColor"/><rect x="7" y="11" width="2" height="2" fill="currentColor"/><rect x="1" y="13" width="14" height="3" fill="currentColor"/></svg> Save</button>
+                            </div>
+                            <div class="report-stat-row" id="expenseStatRow"></div>
+                            <div class="report-dual-charts">
+                                <div class="report-chart-box"><canvas id="expenseDoughnut"></canvas></div>
+                                <div class="report-chart-box"><canvas id="expenseMonthly"></canvas></div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Pet Health Report -->
+                        <div class="report-card">
+                            <div class="report-card-hdr">
+                                <span class="report-card-title">Health Report</span>
+                                <button class="report-dl-btn" data-report="health"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="6" y="1" width="4" height="8" fill="currentColor"/><rect x="4" y="7" width="8" height="2" fill="currentColor"/><rect x="5" y="9" width="6" height="2" fill="currentColor"/><rect x="7" y="11" width="2" height="2" fill="currentColor"/><rect x="1" y="13" width="14" height="3" fill="currentColor"/></svg> Save</button>
+                            </div>
+                            <div class="report-stat-row" id="healthStatRow"></div>
+                            <div class="report-chart-box report-chart-full">
+                                <canvas id="healthLineChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- 3. Achievement Report -->
+                        <div class="report-card">
+                            <div class="report-card-hdr">
+                                <span class="report-card-title">Achievement Report</span>
+                                <button class="report-dl-btn" data-report="achievement"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="6" y="1" width="4" height="8" fill="currentColor"/><rect x="4" y="7" width="8" height="2" fill="currentColor"/><rect x="5" y="9" width="6" height="2" fill="currentColor"/><rect x="7" y="11" width="2" height="2" fill="currentColor"/><rect x="1" y="13" width="14" height="3" fill="currentColor"/></svg> Save</button>
+                            </div>
+                            <div class="report-stat-row" id="achievementStatRow"></div>
+                            <div class="report-chart-box report-chart-full">
+                                <canvas id="achievementChart"></canvas>
+                            </div>
+                            <div class="level-track" id="achievementLevelTrack"></div>
+                        </div>
+
+                        <!-- 4. Care History Report -->
+                        <div class="report-card">
+                            <div class="report-card-hdr">
+                                <span class="report-card-title">Care History Report</span>
+                                <button class="report-dl-btn" data-report="care"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="6" y="1" width="4" height="8" fill="currentColor"/><rect x="4" y="7" width="8" height="2" fill="currentColor"/><rect x="5" y="9" width="6" height="2" fill="currentColor"/><rect x="7" y="11" width="2" height="2" fill="currentColor"/><rect x="1" y="13" width="14" height="3" fill="currentColor"/></svg> Save</button>
+                            </div>
+                            <div class="report-stat-row" id="careStatRow"></div>
+                            <div class="report-chart-box report-chart-full">
+                                <canvas id="careBarChart"></canvas>
+                            </div>
+                        </div>
+
+                    </div><!-- /reportsTab -->
+
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom safe area for mobile -->
+        <div class="bottom-spacer"></div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         HELP CENTER PANEL (slide-in drawer)
+    ════════════════════════════════════════════════ -->
+    <div id="helpPanelOverlay" class="help-overlay" aria-hidden="true" style="display:none"></div>
+
+    <div id="helpPanel" class="help-panel" role="dialog" aria-modal="true"
+         aria-label="Help Center" style="display:none">
+
+        <!-- Header -->
+        <div class="help-hdr">
+            <div class="help-hdr-title">
+                <span class="help-hdr-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+                <span>Help Center</span>
+            </div>
+            <button id="helpPanelClose" class="help-hdr-close" aria-label="Close Help Center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+
+        <!-- Tab bar -->
+        <div class="help-tabs" role="tablist">
+            <button class="help-nav-tab active" data-htab="faq"
+                    role="tab" aria-selected="true"  aria-controls="faqPane"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> FAQ</button>
+            <button class="help-nav-tab"        data-htab="assistant"
+                    role="tab" aria-selected="false" aria-controls="assistantPane"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Ask</button>
+        </div>
+
+        <!-- ── FAQ Pane ────────────────────────────────────── -->
+        <div id="faqPane" class="help-pane active" role="tabpanel">
+
+            <div class="faq-search-wrap">
+                <span class="faq-search-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                <input type="text" id="faqSearchInput" class="faq-search-input"
+                       placeholder="Search questions…" autocomplete="off" aria-label="Search FAQ">
+                <button id="faqSearchClear" class="faq-search-clear"
+                        style="display:none" aria-label="Clear search"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            </div>
+
+            <div class="faq-cats" role="group" aria-label="Filter by category">
+                <button class="faq-cat active" data-cat="all">All</button>
+                <button class="faq-cat" data-cat="basics">Basics</button>
+                <button class="faq-cat" data-cat="coins">Coins</button>
+                <button class="faq-cat" data-cat="stats">Stats</button>
+                <button class="faq-cat" data-cat="growth">Growth</button>
+                <button class="faq-cat" data-cat="reports">Reports</button>
+                <button class="faq-cat" data-cat="ai">Dr. Paws AI</button>
+            </div>
+
+            <div class="faq-list" id="faqList" role="list"></div>
+
+            <div class="help-empty" id="faqEmpty" style="display:none" aria-live="polite">
+                <div class="help-empty-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+                <div class="help-empty-msg">No results for "<span id="faqEmptyTerm"></span>"</div>
+                <button class="btn btn-ghost btn-sm" id="faqEmptyClear">Clear search</button>
+            </div>
+        </div>
+
+        <!-- ── Assistant Pane ──────────────────────────────── -->
+        <div id="assistantPane" class="help-pane" role="tabpanel">
+
+            <div class="assist-intro" id="assistIntro">
+                <div class="assist-intro-avatar"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg></div>
+                <div class="assist-intro-text">
+                    <div class="assist-intro-name">PetPal Helper</div>
+                    <div class="assist-intro-sub">Ask me anything about the game!</div>
+                </div>
+            </div>
+
+            <div class="quick-chips" id="quickChips" aria-label="Quick questions"></div>
+
+            <div class="assist-messages" id="assistMessages" aria-live="polite"></div>
+
+            <div class="assist-input-row">
+                <input type="text" id="assistInput" class="assist-input"
+                       placeholder="Type your question…" maxlength="150"
+                       autocomplete="off" aria-label="Ask a question">
+                <button id="assistSendBtn" class="assist-send-btn" aria-label="Send question"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+            </div>
+        </div>
+
+    </div><!-- #helpPanel -->
+
+    <!-- Floating help button (always visible, all screens) -->
+    <button id="helpFab" class="help-fab" aria-label="Open Help Center" title="Help Center">
+        <span class="help-fab-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+    </button>
+
+    <!-- Legacy stubs so old UIController element lookups silently no-op -->
+    <div id="helpModal"  style="display:none"></div>
+    <div id="helpOverlay" style="display:none"></div>
+
+    <!-- ═══════════════════════════════════════════════
+         TOAST NOTIFICATION CONTAINER
+    ════════════════════════════════════════════════ -->
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+    <!-- ═══════════════════════════════════════════════
+         BADGE / LEVELUP POPUP
+    ════════════════════════════════════════════════ -->
+    <div id="celebrationPopup" class="celebration-popup" style="display:none" role="status" aria-live="assertive">
+        <div class="celebration-content">
+            <!-- Pixel trophy icon -->
+            <div class="celebration-icon" id="celebIcon">
+                <svg viewBox="0 0 28 28" width="28" height="28" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated" aria-hidden="true">
+                    <rect x="4"  y="0"  width="20" height="2"  fill="currentColor"/>
+                    <rect x="2"  y="2"  width="24" height="2"  fill="currentColor"/>
+                    <rect x="2"  y="4"  width="24" height="8"  fill="currentColor"/>
+                    <rect x="0"  y="4"  width="4"  height="6"  fill="currentColor"/>
+                    <rect x="24" y="4"  width="4"  height="6"  fill="currentColor"/>
+                    <rect x="4"  y="12" width="20" height="4"  fill="currentColor"/>
+                    <rect x="8"  y="16" width="12" height="4"  fill="currentColor"/>
+                    <rect x="10" y="20" width="8"  height="2"  fill="currentColor"/>
+                    <rect x="6"  y="22" width="16" height="4"  fill="currentColor"/>
+                    <rect x="4"  y="26" width="20" height="2"  fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="celebration-title" id="celebTitle">Achievement!</div>
+            <div class="celebration-desc" id="celebDesc"></div>
+        </div>
+    </div>
+
+</div><!-- #app -->
+
+<script src="js/PixelSprites.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/Scrapbook.js"></script>
+<script src="js/constants.js"></script>
+<script src="js/Validator.js"></script>
+<script src="js/Pet.js"></script>
+<script src="js/StorageManager.js"></script>
+<script src="js/PersonalityEngine.js"></script>
+<script src="js/Game.js"></script>
+<script src="js/AICompanion.js"></script>
+<script src="js/ReportsCenter.js"></script>
+<script src="js/HelpCenter.js"></script>
+<script src="js/UIController.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
