@@ -15,7 +15,8 @@ class AICompanion {
     }
 
     hasApiKey() {
-        return this._apiKey.length > 10;
+        // Mirror Validator.apiKey's rules so the chat UI hides until a real key is saved.
+        return this._apiKey.startsWith('gsk_') && this._apiKey.length >= 40;
     }
 
     setApiKey(key) {

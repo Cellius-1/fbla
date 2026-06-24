@@ -99,6 +99,8 @@ class Validator {
     static action(pet, actionId) {
         if (!pet) return { ok: false, message: 'No active pet.' };
 
+        // Round all stats before comparison so floating-point drift (e.g. 24.999)
+        // doesn't produce misleading messages ("Energy: 25" but block fires).
         const n  = pet.name;
         const hp = Math.round(pet.health);
         const hu = Math.round(pet.hunger);
@@ -107,7 +109,9 @@ class Validator {
         const ha = Math.round(pet.happiness);
 
         // ── Critical health gate ──────────────────────────────────────────────
-        // When health is 0 the pet cannot do anything but rest or see a vet.
+        // At 0 health the pet is critically ill; only rest or a vet can help.
+        // Blocking other actions prevents the player from spending coins on
+        // care that has no effect and missing the urgent real need.
         if (hp <= 0 && actionId !== 'vet' && actionId !== 'sleep') {
             return {
                 ok: false,
@@ -197,8 +201,10 @@ class Validator {
 
         if (!key)
             return { ok: false, message: 'API key cannot be blank.' };
-        if (!key.startsWith('sk-ant-'))
-            return { ok: false, message: 'Invalid key format — Anthropic keys start with "sk-ant-".' };
+        // Groq API keys always begin with "gsk_" — reject anything else early
+        // so the user gets a clear message rather than a cryptic 401 from Groq.
+        if (!key.startsWith('gsk_'))
+            return { ok: false, message: 'Invalid key format — Groq keys start with "gsk_". Get your key at console.groq.com.' };
         if (key.length < 40)
             return { ok: false, message: `Key looks too short (${key.length} characters). Check that you copied the full key.` };
 

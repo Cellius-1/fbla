@@ -70,19 +70,21 @@ class Pet {
     addXp(baseXp) {
         let xp = baseXp;
 
-        // Personality bonuses
+        // Wise personality gets a 20 % XP bonus to reward the player's choice.
         const p = PERSONALITIES[this.personality];
         if (p) {
             if (p.effect === 'xpBonus')     xp = Math.round(xp * 1.20);
         }
 
+        // Cap total XP at the max level so the bar never overflows.
         this.totalXp = Math.min(this.totalXp + xp, GAME_CONFIG.MAX_LEVEL * GAME_CONFIG.XP_PER_LEVEL);
         const newLevel = Math.min(GAME_CONFIG.MAX_LEVEL, Math.floor(this.totalXp / GAME_CONFIG.XP_PER_LEVEL) + 1);
 
         const leveledUp = newLevel > this.level;
         this.level = newLevel;
 
-        // Check for new tricks
+        // Unlock any tricks whose required level matches the new level.
+        // We check the exact level (not >=) so a trick only fires once.
         const newTricks = [];
         TRICKS.forEach(trick => {
             if (trick.level === this.level && !this.tricks.includes(trick.id)) {
@@ -108,22 +110,29 @@ class Pet {
         const action = ACTIONS[actionId];
         if (!action) return { success: false, message: 'Unknown action.' };
 
+        // Energy hard-block: the Validator also checks this, but Pet guards it too
+        // so the model stays valid even if called directly (e.g. in tests).
         if (actionId === 'play' && this.energy < 10) {
             return { success: false, message: `${this.name} is too tired to play! Let them sleep first.` };
         }
 
-        // Apply effects
+        // Apply each stat delta, then clamp to [0, 100] to prevent overflow/underflow.
+        // Personality traits scale specific deltas to make each choice feel meaningful.
         const personality = PERSONALITIES[this.personality];
         Object.entries(action.effects).forEach(([stat, delta]) => {
             let adjusted = delta;
 
             if (personality) {
+                // Cheerful pets gain 15 % more happiness from any positive interaction.
                 if (personality.effect === 'happinessBonus' && stat === 'happiness' && delta > 0) {
                     adjusted = Math.round(delta * 1.15);
                 }
+                // Lazy pets recover 30 % more energy per sleep — their trade-off for
+                // losing extra energy during play.
                 if (personality.effect === 'sleepBonus' && stat === 'energy' && actionId === 'sleep') {
                     adjusted = Math.round(delta * 1.30);
                 }
+                // Energetic pets burn 20 % more energy during play (higher cost, more XP).
                 if (personality.effect === 'energeticBonus' && actionId === 'play') {
                     if (stat === 'energy' && delta < 0) adjusted = Math.round(delta * 1.2);
                 }
@@ -132,13 +141,14 @@ class Pet {
             this[stat] = Math.max(0, Math.min(100, this[stat] + adjusted));
         });
 
-        // Cure sickness on vet visit
+        // A vet visit clears sickness and gives a small health bonus on top of
+        // the normal action effects — reward for choosing the right action.
         if (actionId === 'vet' && this.isSick) {
             this.isSick = false;
             this.health = Math.min(100, this.health + 15);
         }
 
-        // Track counts
+        // Track per-action counts so badge checks and reports stay accurate.
         this.totalActions++;
         if (actionId === 'feed')  this.feedCount++;
         if (actionId === 'play')  this.playCount++;
@@ -146,15 +156,17 @@ class Pet {
         if (actionId === 'clean') this.cleanCount++;
         if (actionId === 'vet')   this.vetCount++;
 
-        // Build XP
+        // Energetic personality earns 25 % bonus XP for play to compensate for
+        // the higher energy cost applied above.
         let baseXp = action.xp;
         if (personality?.effect === 'energeticBonus' && actionId === 'play') baseXp = Math.round(baseXp * 1.25);
 
         const xpResult = this.addXp(baseXp);
 
-        // Chance for bonus coin flag (funny personality)
+        // Funny personality has a 15 % chance to find a coin on any action.
         const bonusCoin = personality?.effect === 'coinBonus' && Math.random() < 0.15;
 
+        // Pick a random message variant so repeated actions feel less repetitive.
         const msgTemplate = action.message[Math.floor(Math.random() * action.message.length)];
         const message = msgTemplate.replace(/\{\{name\}\}/g, this.name);
 
@@ -166,30 +178,35 @@ class Pet {
     tick() {
         const warnings = [];
 
-        // Degrade all stats
+        // Each tick all primary stats decay by their configured rate.
+        // Health is handled separately below because its decay is conditional.
         this.hunger      = Math.max(0, this.hunger      - STAT_DEGRADATION.hunger);
         this.happiness   = Math.max(0, this.happiness   - STAT_DEGRADATION.happiness);
         this.energy      = Math.max(0, this.energy      - STAT_DEGRADATION.energy);
         this.cleanliness = Math.max(0, this.cleanliness - STAT_DEGRADATION.cleanliness);
 
-        // Health degrades faster when other stats are critically low
+        // Health decays faster when the pet is hungry, dirty, or sick, teaching
+        // players that neglecting one stat has cascading consequences.
         let healthDelta = STAT_DEGRADATION.health;
         if (this.hunger < 20)      healthDelta += 0.5;
         if (this.cleanliness < 20) healthDelta += 0.5;
-        if (this.isSick)           healthDelta += 1.0;
+        if (this.isSick)           healthDelta += 1.0;  // sickness doubles health decay
         this.health = Math.max(0, this.health - healthDelta);
 
-        // Track happy streak
+        // happyStreak counts consecutive ticks above 80 happiness.
+        // Badges use this to reward consistent long-term care.
         if (this.happiness > 80) this.happyStreak++;
         else this.happyStreak = 0;
 
-        // Random sickness (higher chance when health/cleanliness low)
+        // 3 % random sickness chance when health is already low — mimics real pet
+        // health: a weakened immune system makes illness more likely.
         if (!this.isSick && this.health < 40 && Math.random() < 0.03) {
             this.isSick = true;
             warnings.push('sick');
         }
 
-        // Build warnings
+        // Warnings trigger toast notifications in the UI so the player knows
+        // which stat needs attention right now.
         if (this.hunger < 25)      warnings.push('hungry');
         if (this.energy < 20)      warnings.push('tired');
         if (this.happiness < 25)   warnings.push('sad');

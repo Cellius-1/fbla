@@ -71,29 +71,35 @@ class Game {
         const action = ACTIONS[actionId];
         if (!action) return { success: false, message: 'Unknown action.' };
 
-        // Coin check via Validator for a detailed "X coins short" message
+        // Validator gives a human-readable "X coins short" message instead of a
+        // generic error, so the player knows exactly what they need to earn.
         const coinCheck = Validator.coins(this.coins, action.cost);
         if (!coinCheck.ok) return { success: false, message: coinCheck.message };
 
-        // Feasibility check — may also carry an advisory for the UI
+        // Feasibility check catches semantic problems (e.g. playing when exhausted)
+        // and may attach an advisory that the UI shows as an amber toast.
         const feasibility = Validator.action(this.pet, actionId);
         if (!feasibility.ok) {
             return { success: false, message: feasibility.message, soft: feasibility.soft };
         }
 
+        // Store level before action so we can detect a level-up after.
         const prevLevel = this.pet.level;
         const result = this.pet.performAction(actionId);
         if (!result.success) return result;
 
-        // Deduct cost
         if (action.cost > 0) {
             const prevSpent  = this.totalSpent;
             this.coins      -= action.cost;
-            this.coins       = Validator.clampCoins(this.coins); // safety floor — can never go negative
+            // clampCoins is a safety floor: floating-point subtraction could
+            // theoretically produce -0.000001, so we force the minimum to 0.
+            this.coins       = Validator.clampCoins(this.coins);
             this.totalSpent += action.cost;
             this.spentByCategory[action.category] =
                 (this.spentByCategory[action.category] || 0) + action.cost;
 
+            // Persist each expense individually so the Reports tab can chart
+            // spending over time, not just the running total.
             this.storage.saveExpense({
                 action: actionId,
                 label: action.label,
@@ -102,7 +108,8 @@ class Game {
                 coinsAfter: this.coins
             });
 
-            // Coin spending milestones
+            // Trigger scrapbook milestones only when a threshold is first crossed
+            // (prevSpent < m and now totalSpent >= m), not on every action after.
             for (const m of [100, 500, 1000]) {
                 if (prevSpent < m && this.totalSpent >= m) {
                     this.scrapbook?.onCoinMilestone(m, this);
@@ -110,7 +117,8 @@ class Game {
             }
         }
 
-        // Bonus coin from funny personality
+        // Funny personality's coin bonus is resolved here (in Game, not Pet) so
+        // the financial ledger stays in one place.
         if (result.bonusCoin) {
             const bonus = Math.floor(Math.random() * 10) + 5;
             this.coins       += bonus;
@@ -121,18 +129,19 @@ class Game {
 
         this._log(`${Icons.pixelSvg(action.icon, 14)} ${result.message}`);
 
-        // Personality engine tracking
+        // PersonalityEngine tracks feed/play frequency to adjust the pet's
+        // displayed personality trait over time.
         if (actionId === 'feed' || actionId === 'play') {
             this.personality?.recordAction(actionId);
         }
 
-        // Scrapbook recording
         this.scrapbook?.onAction(actionId, this);
         if (this.pet.level > prevLevel) {
             this.scrapbook?.onLevelUp(this.pet.level, this);
         }
 
-        // Check badges
+        // Badge check runs after every action so newly-met conditions are
+        // caught immediately rather than waiting for the next tick.
         const newBadges = this._checkBadges();
 
         return { ...result, newBadges, coins: this.coins, advisory: feasibility.advisory };
@@ -217,6 +226,8 @@ class Game {
     _recordStatSnapshot() {
         const p = this.pet;
         if (!p) return;
+        // Snapshot all five stats with a timestamp so the Reports chart can
+        // plot trends over the session rather than just the current values.
         this.statHistory.push({
             ts:          Date.now(),
             health:      Math.round(p.health),
@@ -225,7 +236,8 @@ class Game {
             energy:      Math.round(p.energy),
             cleanliness: Math.round(p.cleanliness)
         });
-        // Keep last 600 snapshots (~14 hours at 88 s intervals)
+        // Cap at 600 entries (~14 hours of data at one snapshot every 88 s).
+        // Older entries are dropped to keep localStorage usage manageable.
         if (this.statHistory.length > 600) this.statHistory.shift();
     }
 
@@ -234,6 +246,7 @@ class Game {
     _checkBadges() {
         const newOnes = [];
         BADGES.forEach(badge => {
+            // Skip badges the player already has; each badge is a one-time award.
             if (!this.unlockedBadges.includes(badge.id) && badge.check(this)) {
                 this.unlockedBadges.push(badge.id);
                 newOnes.push(badge);
@@ -241,6 +254,8 @@ class Game {
                 this.scrapbook?.onBadge(badge, this);
             }
         });
+        // Return only the newly unlocked badges so the UI can show a pop-up
+        // just for this tick, not for every badge the player already owns.
         return newOnes;
     }
 
