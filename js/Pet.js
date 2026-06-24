@@ -51,7 +51,7 @@ class Pet {
     }
 
     getMoodText() {
-        const e = this.getEmotion();
+        const emotion = this.getEmotion();
         const lines = {
             ecstatic: `${this.name} is absolutely thrilled!`,
             happy:    `${this.name} is happy and content.`,
@@ -62,7 +62,7 @@ class Pet {
             sick:     `${this.name} is sick and needs the vet!`,
             dirty:    `${this.name} really needs a bath!`
         };
-        return lines[Object.keys(EMOTIONS).find(k => EMOTIONS[k] === e)] || `${this.name} is here.`;
+        return lines[Object.keys(EMOTIONS).find(k => EMOTIONS[k] === emotion)] || `${this.name} is here.`;
     }
 
     // ── XP & Leveling ─────────────────────────────────────────────────────────
@@ -71,9 +71,9 @@ class Pet {
         let xp = baseXp;
 
         // Wise personality gets a 20 % XP bonus to reward the player's choice.
-        const p = PERSONALITIES[this.personality];
-        if (p) {
-            if (p.effect === 'xpBonus')     xp = Math.round(xp * 1.20);
+        const personalityDef = PERSONALITIES[this.personality];
+        if (personalityDef) {
+            if (personalityDef.effect === 'xpBonus')     xp = Math.round(xp * 1.20);
         }
 
         // Cap total XP at the max level so the bar never overflows.
@@ -118,22 +118,22 @@ class Pet {
 
         // Apply each stat delta, then clamp to [0, 100] to prevent overflow/underflow.
         // Personality traits scale specific deltas to make each choice feel meaningful.
-        const personality = PERSONALITIES[this.personality];
+        const personalityDef = PERSONALITIES[this.personality];
         Object.entries(action.effects).forEach(([stat, delta]) => {
             let adjusted = delta;
 
-            if (personality) {
+            if (personalityDef) {
                 // Cheerful pets gain 15 % more happiness from any positive interaction.
-                if (personality.effect === 'happinessBonus' && stat === 'happiness' && delta > 0) {
+                if (personalityDef.effect === 'happinessBonus' && stat === 'happiness' && delta > 0) {
                     adjusted = Math.round(delta * 1.15);
                 }
                 // Lazy pets recover 30 % more energy per sleep — their trade-off for
                 // losing extra energy during play.
-                if (personality.effect === 'sleepBonus' && stat === 'energy' && actionId === 'sleep') {
+                if (personalityDef.effect === 'sleepBonus' && stat === 'energy' && actionId === 'sleep') {
                     adjusted = Math.round(delta * 1.30);
                 }
                 // Energetic pets burn 20 % more energy during play (higher cost, more XP).
-                if (personality.effect === 'energeticBonus' && actionId === 'play') {
+                if (personalityDef.effect === 'energeticBonus' && actionId === 'play') {
                     if (stat === 'energy' && delta < 0) adjusted = Math.round(delta * 1.2);
                 }
             }
@@ -159,12 +159,12 @@ class Pet {
         // Energetic personality earns 25 % bonus XP for play to compensate for
         // the higher energy cost applied above.
         let baseXp = action.xp;
-        if (personality?.effect === 'energeticBonus' && actionId === 'play') baseXp = Math.round(baseXp * 1.25);
+        if (personalityDef?.effect === 'energeticBonus' && actionId === 'play') baseXp = Math.round(baseXp * 1.25);
 
         const xpResult = this.addXp(baseXp);
 
         // Funny personality has a 15 % chance to find a coin on any action.
-        const bonusCoin = personality?.effect === 'coinBonus' && Math.random() < 0.15;
+        const bonusCoin = personalityDef?.effect === 'coinBonus' && Math.random() < 0.15;
 
         // Pick a random message variant so repeated actions feel less repetitive.
         const msgTemplate = action.message[Math.floor(Math.random() * action.message.length)];
@@ -185,8 +185,12 @@ class Pet {
         this.energy      = Math.max(0, this.energy      - STAT_DEGRADATION.energy);
         this.cleanliness = Math.max(0, this.cleanliness - STAT_DEGRADATION.cleanliness);
 
-        // Health decays faster when the pet is hungry, dirty, or sick, teaching
-        // players that neglecting one stat has cascading consequences.
+        // Health decay is additive: hunger below 20 adds +0.5/tick, low cleanliness
+        // adds another +0.5/tick, and active sickness adds +1.0/tick on top of the
+        // base rate — all three penalties can stack simultaneously. This makes
+        // prolonged neglect self-reinforcing: a hungry, dirty, sick pet loses health
+        // several times faster than a healthy one, teaching players that ignoring one
+        // stat accelerates decline across the whole system.
         let healthDelta = STAT_DEGRADATION.health;
         if (this.hunger < 20)      healthDelta += 0.5;
         if (this.cleanliness < 20) healthDelta += 0.5;

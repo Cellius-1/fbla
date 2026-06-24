@@ -33,7 +33,12 @@ class Validator {
         return { ok: true, value: name };
     }
 
-    // Incremental feedback while the user types (looser — don't flag valid partial input)
+    // petNameLive is intentionally more permissive than petName so validation
+    // feels helpful rather than hostile during typing. It only rejects strings
+    // that are already definitively wrong — over the character limit or containing
+    // a forbidden character — rather than penalizing a valid name that happens to
+    // be incomplete (e.g. a single letter mid-type would fail petName's 2-char
+    // minimum). petName runs the full strict check only on final form submission.
     static petNameLive(raw) {
         const name = String(raw ?? '');
         if (name.length > 20)

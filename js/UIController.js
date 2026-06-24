@@ -193,7 +193,10 @@ class UIController {
             ctrEl.className   = 'char-counter' + (len > 18 ? (len > 20 ? ' over-limit' : ' near-limit') : '');
         }
 
-        // Live error feedback — only flag definite problems, not incomplete input
+        // Live validation uses Validator.petNameLive (lenient) rather than the strict
+        // Validator.petName used at submit. The lenient version only rejects strings
+        // that are already definitively invalid (too long, forbidden characters) and
+        // ignores strings that are simply incomplete, preventing false errors mid-type.
         const result = Validator.petNameLive(raw);
         if (!result.ok) {
             if (errEl) { errEl.textContent = result.message; errEl.className = 'input-error shown'; }
@@ -358,12 +361,20 @@ class UIController {
         const result = this.game.doAction(actionId);
 
         if (!result.success) {
-            // soft = advisory block (amber); hard = true error (red)
+            // result.soft separates two distinct failure modes:
+            //   soft=true  → 'warning' (amber) — action was blocked for a non-critical
+            //                 reason (e.g. pet isn't hungry enough); the player can retry
+            //                 after a short wait without changing game state.
+            //   soft=false → 'danger'  (red)   — action is genuinely invalid (e.g. not
+            //                 enough coins); the player must change state before retrying.
             this._showToast(result.message, result.soft ? 'warning' : 'danger');
             return;
         }
 
-        // Show advisory note before the success message so it doesn't vanish immediately
+        // Advisory toast is queued before the success toast intentionally. Toasts stack
+        // and each auto-dismiss after 3.5 s, so surfacing the advisory first ensures
+        // the player reads the caveat before the positive confirmation appears on top.
+        // Reversing the order would cause the advisory to be immediately hidden.
         if (result.advisory) {
             this._showToast(result.advisory, 'info');
         }
@@ -441,7 +452,11 @@ class UIController {
 
         this._refreshAll();
 
-        // Show warnings as toasts (throttle: only one every 3 ticks)
+        // Warning toasts are throttled to once every 3 ticks to prevent flooding the
+        // UI during prolonged stat decline (e.g. hunger dropping over many consecutive
+        // ticks). Only the highest-priority warning (first element in the array) is
+        // shown; lower-priority warnings are silently dropped until the next eligible
+        // tick, keeping notifications actionable rather than overwhelming.
         if (warnings.length && this._tickN % 3 === 0) {
             const msgMap = {
                 hungry:    `${this.game.pet.name} is hungry. Feed them soon.`,

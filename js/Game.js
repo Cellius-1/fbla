@@ -71,13 +71,16 @@ class Game {
         const action = ACTIONS[actionId];
         if (!action) return { success: false, message: 'Unknown action.' };
 
-        // Validator gives a human-readable "X coins short" message instead of a
-        // generic error, so the player knows exactly what they need to earn.
+        // Two-phase validation: coin check runs first because it is unconditional —
+        // if the player can't afford the action there is no point evaluating whether
+        // the pet needs it. Feasibility runs second and can return ok:true with an
+        // advisory string (e.g. "pet isn't hungry but a snack won't hurt"), which
+        // is forwarded to the UI as an amber info toast alongside the success result.
+        // Reversing the order would surface pet-state messages even when the player
+        // lacks the coins to act on them.
         const coinCheck = Validator.coins(this.coins, action.cost);
         if (!coinCheck.ok) return { success: false, message: coinCheck.message };
 
-        // Feasibility check catches semantic problems (e.g. playing when exhausted)
-        // and may attach an advisory that the UI shows as an amber toast.
         const feasibility = Validator.action(this.pet, actionId);
         if (!feasibility.ok) {
             return { success: false, message: feasibility.message, soft: feasibility.soft };
