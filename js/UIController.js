@@ -735,11 +735,16 @@ class UIController {
             el.innerHTML = '<div class="empty-state">No activity yet. Start caring for your pet!</div>';
             return;
         }
-        el.innerHTML = this.game.activityLog.map(entry => `
-            <div class="log-entry">
-                <span class="log-text">${entry.text}</span>
+        el.innerHTML = this.game.activityLog.map(entry => {
+            const svgMatch = entry.text.match(/^(<svg[\s\S]*?<\/svg>)\s*([\s\S]*)$/);
+            const icon = svgMatch ? svgMatch[1] : '';
+            const text = svgMatch ? svgMatch[2] : entry.text;
+            return `<div class="log-entry">
+                ${icon ? `<span class="log-icon">${icon}</span>` : ''}
+                <span class="log-text">${text}</span>
                 <span class="log-time">${this._timeAgo(entry.ts)}</span>
-            </div>`).join('');
+            </div>`;
+        }).join('');
     }
 
     _renderPersonality() {

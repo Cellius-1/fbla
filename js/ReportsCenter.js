@@ -64,7 +64,6 @@ class ReportsCenter {
         this._destroy(id);
         const canvas = document.getElementById(id);
         if (!canvas) return;
-        // Match canvas CSS size
         canvas.width  = canvas.offsetWidth  || 300;
         canvas.height = canvas.offsetHeight || 200;
         const ctx = canvas.getContext('2d');
@@ -73,7 +72,24 @@ class ReportsCenter {
         ctx.font         = "7px 'Press Start 2P', monospace";
         ctx.textAlign    = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(msg, canvas.width / 2, canvas.height / 2);
+        // Word-wrap so long messages don't get clipped at canvas edges
+        const maxWidth = canvas.width - 32;
+        const words = msg.split(' ');
+        const lines = [];
+        let line = '';
+        for (const word of words) {
+            const test = line ? line + ' ' + word : word;
+            if (ctx.measureText(test).width > maxWidth && line) {
+                lines.push(line);
+                line = word;
+            } else {
+                line = test;
+            }
+        }
+        if (line) lines.push(line);
+        const lineH = 18;
+        const startY = canvas.height / 2 - ((lines.length - 1) * lineH) / 2;
+        lines.forEach((l, i) => ctx.fillText(l, canvas.width / 2, startY + i * lineH));
     }
 
     // ── Stat Chips Row ────────────────────────────────────────────────────────

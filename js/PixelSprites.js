@@ -406,12 +406,20 @@ const PixelSprites = (() => {
     return img;
   }
 
-  function _drawSheetFrame(ctx, img, cfg, row, col, displaySize) {
+  function _drawSheetFrame(ctx, img, cfg, row, col, displaySize, tintHex) {
     const fw = img.naturalWidth  / cfg.cols;
     const fh = img.naturalHeight / cfg.rows;
     ctx.imageSmoothingEnabled = false;
     ctx.clearRect(0, 0, displaySize, displaySize);
     ctx.drawImage(img, col * fw, row * fh, fw, fh, 0, 0, displaySize, displaySize);
+    if (tintHex) {
+      ctx.save();
+      ctx.globalCompositeOperation = 'source-atop';
+      ctx.globalAlpha = 0.38;
+      ctx.fillStyle = tintHex;
+      ctx.fillRect(0, 0, displaySize, displaySize);
+      ctx.restore();
+    }
   }
 
   /* ── Animated main pet display ──────────────────────── */
@@ -442,10 +450,11 @@ const PixelSprites = (() => {
       el.innerHTML         = '';
       el.appendChild(canvas);
       const ctx = canvas.getContext('2d');
+      const tint = PET_COLOR_HEXES[_currentColor] || null;
 
       function drawF(col) {
         if (!img.complete || !img.naturalWidth) return;
-        _drawSheetFrame(ctx, img, cfg, sc.row, col, SIZE);
+        _drawSheetFrame(ctx, img, cfg, sc.row, col, SIZE, tint);
       }
       if (!img.complete) img.addEventListener('load', () => drawF(0), { once: true });
 
@@ -458,7 +467,7 @@ const PixelSprites = (() => {
 
         function drawAny(row, col) {
           if (!img.complete || !img.naturalWidth) return;
-          _drawSheetFrame(ctx, img, cfg, row, col, SIZE);
+          _drawSheetFrame(ctx, img, cfg, row, col, SIZE, tint);
         }
 
         function scheduleShift() {

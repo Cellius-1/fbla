@@ -123,14 +123,14 @@ const FAQ_DATA = [
     {
         id: 'fq16', category: 'ai', icon: 'message',
         question: 'How do I chat with Dr. Paws?',
-        answer: 'Click the <strong>Chat</strong> tab to open a conversation with <strong>Dr. Paws</strong>, a built-in AI pet care advisor. Dr. Paws knows your pet\'s current stats, personality, and recent activity — and gives warm, personalized advice on how to care for your pet. No API key or setup required.',
+        answer: 'Click the <strong>Chat</strong> tab and enter your free <strong>Groq API key</strong> to unlock Dr. Paws. Get one free at <strong>console.groq.com</strong> → sign up → API Keys → Create key. Paste it in and press Connect — Dr. Paws then knows your pet\'s current stats, personality, and recent activity to give personalized advice.',
         tip: 'Ask Dr. Paws anything about your pet\'s health, happiness, or what to do next!',
         tags: ['chat', 'talk', 'ai', 'dr paws', 'advisor', 'companion', 'conversation', 'message', 'speak', 'how to chat']
     },
     {
         id: 'fq17', category: 'ai', icon: 'lock',
         question: 'Who is Dr. Paws?',
-        answer: 'Dr. Paws is your built-in <strong>AI pet care advisor</strong> powered by a fast AI language model. Dr. Paws speaks as a friendly expert — not as your pet — giving specific, actionable advice based on your pet\'s current stats, personality, and care history. No account or setup is needed.',
+        answer: 'Dr. Paws is your <strong>AI pet care advisor</strong> powered by Groq\'s free AI API. Dr. Paws speaks as a friendly expert — not as your pet — giving specific, actionable advice based on your pet\'s current stats, personality, and care history. A free Groq API key is required (get one at <strong>console.groq.com</strong>).',
         tip: 'Dr. Paws is designed to be friendly and easy to understand — perfect for getting quick pet care tips.',
         tags: ['dr paws', 'ai', 'advisor', 'who is', 'companion', 'built-in', 'pet advisor']
     },
@@ -305,10 +305,11 @@ View current traits and the full evolution history in <strong>Growth → Persona
         keywords: ['chat', 'talk', 'ai companion', 'conversation', 'message', 'speak to', 'how do I talk', 'talk to pet', 'chat with pet', 'dr paws', 'who is dr paws'],
         response: {
             title: 'AI Advisor — Dr. Paws',
-            body: `Chat with <strong>Dr. Paws</strong>, your built-in AI pet care advisor — no setup needed!<br><br>
+            body: `Chat with <strong>Dr. Paws</strong>, your AI pet care advisor powered by Groq.<br><br>
 1. Click the <strong>Chat</strong> tab<br>
-2. Type your question<br>
-3. Dr. Paws responds with advice based on your pet\'s current stats and personality<br><br>
+2. Paste your free <strong>Groq API key</strong> (get one at <strong>console.groq.com</strong>)<br>
+3. Press <strong>Connect</strong> and start chatting<br>
+4. Dr. Paws responds with advice based on your pet\'s current stats and personality<br><br>
 Dr. Paws is a <em>friendly expert advisor</em>, not the pet itself — expect warm care tips and guidance, not pet-speak.`,
             links: [{ label: 'Does Dr. Paws remember me?', q: 'does dr paws remember past conversations' }]
         }
@@ -317,10 +318,15 @@ Dr. Paws is a <em>friendly expert advisor</em>, not the pet itself — expect wa
         id: 'apikey',
         keywords: ['api key', 'api', 'key', 'anthropic', 'sk-ant', 'groq', 'get key', 'setup', 'connect', 'where do I get', 'how do I get key', 'no key', 'built-in ai'],
         response: {
-            title: 'No API Key Needed',
-            body: `The AI advisor (Dr. Paws) is <strong>built right into PetPal AI</strong> — no API key or account required.<br><br>
-Just click the <strong>Chat</strong> tab and start typing. Dr. Paws is powered by a fast AI model running in the background.<br><br>
-Your chat history and remembered facts are stored <em>only in your browser</em> — never sent to any third party.`,
+            title: 'Getting a Groq API Key',
+            body: `Dr. Paws uses <strong>Groq's free API</strong> — you need a key to activate it.<br><br>
+<strong>How to get your free key:</strong><br>
+1. Go to <strong>console.groq.com</strong><br>
+2. Sign up for a free account<br>
+3. Click <strong>API Keys</strong> → <strong>Create API Key</strong><br>
+4. Copy the key (starts with <code>gsk_</code>)<br>
+5. Paste it in the Chat tab and press <strong>Connect</strong><br><br>
+Your key is stored <em>only in your browser</em> and never shared.`,
             links: [{ label: 'How to chat?', q: 'how do I chat with dr paws' }]
         }
     },

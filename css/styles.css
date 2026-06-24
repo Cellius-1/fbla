@@ -362,7 +362,7 @@ h5 { font-size: 0.5625rem; }
 
 /* Pet type grid */
 .pet-type-grid {
-  display: grid; grid-template-columns: repeat(5, 1fr);
+  display: grid; grid-template-columns: repeat(4, 1fr);
   gap: var(--sp-3); margin-bottom: var(--sp-6);
 }
 .pet-type-card {
@@ -1075,14 +1075,16 @@ h5 { font-size: 0.5625rem; }
 /* ── History Tab ──────────────────────────────────────────── */
 .activity-log { display: flex; flex-direction: column; gap: 2px; }
 .log-entry {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  gap: var(--sp-3); padding: 8px var(--sp-3);
+  display: flex; align-items: center;
+  gap: var(--sp-2); padding: 8px var(--sp-3);
   border: 1px solid transparent;
   transition: background 80ms steps(1);
 }
 .log-entry:hover { background: var(--surface-2); border-color: var(--border); }
+.log-icon { display: flex; align-items: center; flex-shrink: 0; color: var(--text-3); }
+.log-icon svg { display: inline; }
 .log-text { font-family: var(--font-body); font-size: 0.875rem; color: var(--text-2); flex: 1; line-height: 1.5; }
-.log-time { font-family: var(--font-body); font-size: 0.6875rem; color: var(--text-4); flex-shrink: 0; padding-top: 2px; }
+.log-time { font-family: var(--font-body); font-size: 0.6875rem; color: var(--text-4); flex-shrink: 0; margin-left: auto; padding-left: var(--sp-3); }
 
 /* ── Chat Tab ─────────────────────────────────────────────── */
 #chatTab.tab-content { padding: 0; }
