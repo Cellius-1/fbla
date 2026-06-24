@@ -27,12 +27,16 @@
 
 ### Core Functionality
 
-- **🎮 Pet Customization**: 5 unique pet types with customizable names
+- **🎮 Pet Customization**: 4 pet types (Dog, Cat, Rabbit, Bird) with customizable names
 - **💰 Financial System**: Budget tracking with 3 difficulty levels
 - **🏥 Pet Care**: 6 different care actions with realistic costs
 - **📊 Advanced Stats**: 5 interconnected stat systems (hunger, energy, happiness, cleanliness, health)
 - **😊 Emotions**: 8 distinct emotions based on pet state
-- **🏆 Achievements**: 8 unlockable achievements for gameplay milestones
+- **🏆 Badges**: 12 unlockable badges for gameplay milestones
+- **🎓 Tricks**: 9 tricks unlocked as your pet levels up
+- **🧹 Chores**: 6 chores that earn coins to extend your budget
+- **🤖 AI Chat**: Groq-powered Dr. Paws advisor (enter your key in the Chat tab)
+- **📈 Reports**: Chart.js expense and stat history analytics
 - **💾 Data Persistence**: Browser localStorage for game saving
 - **🎨 Professional UI**: Responsive design with smooth animations
 - **⌨️ Keyboard Shortcuts**: Hotkeys for power users
@@ -62,7 +66,7 @@
 ### Setup Phase
 
 1. **Enter Pet Name**: 2-20 characters
-2. **Select Pet Type**: Dog, Cat, Rabbit, Hamster, or Bird
+2. **Select Pet Type**: Dog, Cat, Rabbit, or Bird
 3. **Choose Difficulty**: Easy, Medium, or Hard (affects costs)
 4. **Set Budget**: Starting money ($100-$2,000)
 5. **Play!**
@@ -100,17 +104,25 @@
 
 ```
 fbla/
-├── index.html              Main application file
+├── index.html              Main application file (988 lines)
 ├── css/
-│   ├── styles.css         Main stylesheet
-│   └── animations.css     Animations
+│   ├── styles.css         Main stylesheet (1,900+ lines)
+│   └── animations.css     Animations (256 lines)
 ├── js/
-│   ├── constants.js       Game configuration
-│   ├── Pet.js            Pet class logic
-│   ├── Game.js           Game management
+│   ├── constants.js       Game configuration & data
+│   ├── icons.js           SVG icon library
+│   ├── PixelSprites.js    Pixel art pet sprites
+│   ├── Validator.js       Input validation
+│   ├── Pet.js             Pet model
 │   ├── StorageManager.js  Data persistence
-│   ├── UIController.js   UI management
-│   └── main.js           Entry point
+│   ├── Game.js            Game controller
+│   ├── AICompanion.js     Groq AI chat
+│   ├── PersonalityEngine.js Adaptive pet personality
+│   ├── Scrapbook.js       Milestone memory journal
+│   ├── ReportsCenter.js   Chart.js analytics
+│   ├── HelpCenter.js      Searchable FAQ
+│   ├── UIController.js    UI management
+│   └── main.js            Entry point
 ├── docs/                  Documentation files
 ├── README.md             This file
 └── RESOURCES.md          Libraries & credits
@@ -118,14 +130,20 @@ fbla/
 
 ### Code Organization
 
-**6 Professional Modules**: ~2,000 lines of well-documented code
+**12 Professional Modules**: ~5,100 lines of well-documented code
 
-- **constants.js** (400 lines): Configuration
-- **Pet.js** (450 lines): Pet state and logic
-- **Game.js** (500 lines): Game rules and mechanics
-- **StorageManager.js** (350 lines): Data persistence
-- **UIController.js** (600 lines): UI management
-- **main.js** (150 lines): Application bootstrap
+- **constants.js** (187 lines): Configuration, pet types, badges, tricks, chores
+- **Pet.js** (228 lines): Pet model, stats, level/XP
+- **Game.js** (331 lines): Game rules, loop, chores income
+- **StorageManager.js** (82 lines): Data persistence
+- **AICompanion.js** (239 lines): Groq streaming chat, key management
+- **PersonalityEngine.js** (240 lines): Adaptive personality traits
+- **Scrapbook.js** (425 lines): Auto-recorded milestone journal
+- **ReportsCenter.js** (442 lines): Chart.js analytics
+- **HelpCenter.js** (710 lines): 20-item searchable FAQ
+- **UIController.js** (1,200 lines): Full UI management across 9 tabs
+- **Validator.js** (220 lines): Centralized input validation
+- **main.js** (47 lines): Application bootstrap
 
 ### Design Patterns
 
@@ -194,7 +212,12 @@ fbla/
 
 Beyond basic requirements, this application includes:
 
-🌟 **Advanced Achievement System** (8 unlockable achievements)  
+🌟 **Badge System** (12 unlockable badges)  
+🌟 **Tricks System** (9 tricks unlocked by leveling up)  
+🌟 **Chores Income System** (6 chores that earn coins)  
+🌟 **AI Chat Advisor** (Groq-powered Dr. Paws, stat-aware streaming chat)  
+🌟 **Analytics Reports** (Chart.js expense and stat history)  
+🌟 **Scrapbook Journal** (auto-recorded milestone memories)  
 🌟 **Personality Traits** (Each pet has unique traits)  
 🌟 **Sickness Mechanics** (Realistic health management)  
 🌟 **Weekly Cost Analysis** (Financial reporting)  

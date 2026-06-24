@@ -23,21 +23,29 @@
 
 ```
 fbla/
-├── 📄 index.html                    (Main application - 350 lines)
+├── 📄 index.html                    (Main application - 988 lines)
 ├── 📄 README.md                     (Full documentation - 400+ lines)
 ├── 📄 RESOURCES.md                  (Attribution & libraries - 300+ lines)
 │
 ├── css/
-│   ├── styles.css                   (Main styles - 900 lines)
-│   └── animations.css               (Animations - 400 lines)
+│   ├── styles.css                   (Main styles - 1,900+ lines)
+│   └── animations.css               (Animations - 256 lines)
 │
 ├── js/
-│   ├── constants.js                 (Configuration - 400 lines)
-│   ├── Pet.js                       (Pet logic - 450 lines)
-│   ├── Game.js                      (Game logic - 500 lines)
-│   ├── StorageManager.js            (Data persistence - 350 lines)
-│   ├── UIController.js              (UI management - 600 lines)
-│   └── main.js                      (Entry point - 150 lines)
+│   ├── constants.js                 (Config & game data - 187 lines)
+│   ├── icons.js                     (SVG icon library - 197 lines)
+│   ├── PixelSprites.js              (Pixel art sprites - 593 lines)
+│   ├── Validator.js                 (Input validation - 220 lines)
+│   ├── Pet.js                       (Pet model - 228 lines)
+│   ├── StorageManager.js            (Data persistence - 82 lines)
+│   ├── Game.js                      (Game controller - 331 lines)
+│   ├── AICompanion.js               (Groq AI chat - 239 lines)
+│   ├── PersonalityEngine.js         (Adaptive traits - 240 lines)
+│   ├── Scrapbook.js                 (Memory journal - 425 lines)
+│   ├── ReportsCenter.js             (Chart.js analytics - 442 lines)
+│   ├── HelpCenter.js                (Searchable FAQ - 710 lines)
+│   ├── UIController.js              (UI management - 1,200 lines)
+│   └── main.js                      (Entry point - 47 lines)
 │
 ├── docs/
 │   ├── ARCHITECTURE.md              (Technical design)
@@ -47,7 +55,7 @@ fbla/
 └── .git/                            (Version control)
 ```
 
-**Total Production Code**: ~2,000 lines of well-organized JavaScript  
+**Total Production Code**: ~5,100 lines of well-organized JavaScript  
 **Total Documentation**: ~1,500 lines across 5 comprehensive files  
 
 ---
@@ -71,12 +79,17 @@ fbla/
 
 | Feature | Status | Details |
 |---------|--------|---------|
-| 🎨 Pet Customization | ✅ | 5 pet types + custom names |
+| 🎨 Pet Customization | ✅ | 4 pet types (Dog, Cat, Rabbit, Bird) + custom names |
 | 💰 Financial System | ✅ | Budget tracking, 3 difficulties |
 | 🏥 Pet Care | ✅ | 6 care actions with real costs |
 | 📊 Stats System | ✅ | 5 interconnected stats |
 | 😊 Emotions | ✅ | 8 emotional states |
-| 🏆 Achievements | ✅ | 8 unlockable achievements |
+| 🏆 Badges | ✅ | 12 unlockable badges |
+| 🎓 Tricks | ✅ | 9 tricks unlocked by leveling up |
+| 🧹 Chores | ✅ | 6 chores that earn coins |
+| 🤖 AI Chat | ✅ | Groq-powered Dr. Paws advisor (user supplies key) |
+| 📈 Reports | ✅ | Chart.js expense & stat analytics |
+| 📖 Scrapbook | ✅ | Auto-recorded milestone journal |
 | 💾 Save/Load | ✅ | Browser storage persistence |
 | 📱 Mobile | ✅ | Fully responsive design |
 | ⌨️ Shortcuts | ✅ | Keyboard hotkeys |
@@ -89,7 +102,7 @@ fbla/
 ### Programming Concepts Demonstrated
 
 ✅ **Object-Oriented Programming**
-- Classes: Pet, Game, UIController, StorageManager
+- Classes: Pet, Game, UIController, StorageManager, AICompanion, ReportsCenter, Scrapbook, PersonalityEngine, HelpCenter, Validator, PixelSprites (11 classes)
 - Encapsulation, inheritance, polymorphism
 - Professional code architecture
 
@@ -128,7 +141,7 @@ fbla/
 ## 📊 Code Quality Metrics
 
 ### Code Organization (10/10)
-- 6 well-organized modules with clear purposes
+- 12 well-organized modules with clear purposes
 - Single responsibility principle
 - Reusable, maintainable code
 
@@ -207,24 +220,30 @@ fbla/
 
 ### To Judges
 
-**"This virtual pet simulator demonstrates professional software architecture using vanilla JavaScript. I've organized the code into 6 modules following the MVC pattern:
+**"This virtual pet simulator demonstrates professional software architecture using vanilla JavaScript. I've organized the code into 12 modules following the MVC pattern:
 
-- **Pet class** manages pet state and behavior logic
-- **Game class** implements the rules and game loop
-- **UIController class** handles all user interface updates
+- **Pet class** manages pet state, stats, and level/XP progression
+- **Game class** implements rules, the game loop, and the chores income system
+- **UIController class** handles all user interface updates across 9 tabs
 - **StorageManager class** persists data to browser storage
+- **AICompanion class** integrates with the Groq API for streaming AI chat
+- **ReportsCenter class** renders Chart.js analytics and expense graphs
+- **Scrapbook class** auto-records milestone moments as a first-person journal
+- **PersonalityEngine class** adapts the pet's personality based on player behavior
+- **HelpCenter class** provides a 20-item searchable FAQ
+- **Validator class** centralizes all input validation
 
-The application includes a complete financial responsibility system teaching budget management, with 3 difficulty levels affecting expense multipliers. All stats degrade over time, and the pet can become sick if neglected, requiring health checks."**
+The application includes a complete financial responsibility system teaching budget management, with 3 difficulty levels, a chores income system, 12 unlockable badges, and 9 tricks that unlock as the pet levels up."**
 
 ### Key Points to Mention
 
-1. ✅ **Object-Oriented Design**: 6 well-organized classes
+1. ✅ **Object-Oriented Design**: 12 well-organized classes
 2. ✅ **MVC Architecture**: Clean separation of concerns
-3. ✅ **Financial System**: Real costs, budget management, difficulty levels
-4. ✅ **Pet AI**: Emotional responses based on stat calculations
+3. ✅ **Financial System**: Real costs, budget management, chores income, difficulty levels
+4. ✅ **Pet AI**: Emotional responses, adaptive personality, AI chat advisor (Groq)
 5. ✅ **Data Persistence**: Browser storage with save/load
-6. ✅ **Professional UI**: Responsive, accessible, animated
-7. ✅ **100% Original**: No external dependencies or frameworks
+6. ✅ **Professional UI**: 9 tabs, responsive, accessible, animated
+7. ✅ **Analytics**: Chart.js expense and stat history reports
 8. ✅ **Well-Documented**: 5 comprehensive documentation files
 
 ---
@@ -249,13 +268,15 @@ if (cleanliness < 40 || health < 50 || neglected) {
 }
 ```
 
-**Achievement System**: 8 unlockable achievements based on gameplay
+**Badge System**: 12 unlockable badges based on gameplay milestones
 ```javascript
-Great Parent: All stats > 80%
-Budget Master: Spending < 80% of budget
-Pet Expert: 50+ care actions performed
-Loyal Friend: 80% happiness for 7+ days
-// ... and 4 more
+First Steps: Perform your first care action
+Feeding Pro: Feed your pet 10 times
+Playmate: Play with your pet 20 times
+Chore Star: Complete 10 chores
+Level Five / Pet Master: Reach levels 5 and 10
+Perfect Care: Keep all stats above 70 simultaneously
+// ... and 6 more
 ```
 
 **Financial Tracking**: Expense history with weekly analysis
@@ -320,7 +341,7 @@ Expense Breakdown: { feed: $X, play: $Y, ... }
 - Professional UI/UX with animations
 
 ✅ **Code Excellence**
-- 2,000+ lines of well-organized code
+- 5,000+ lines of well-organized code across 12 modules
 - Professional design patterns (MVC)
 - Comprehensive error handling
 - Clear naming conventions
@@ -413,12 +434,12 @@ A: Demonstrates mastery of fundamentals. Shows understanding of vanilla JavaScri
 ### Key Talking Points
 1. "This demonstrates professional software architecture"
 2. "I used the MVC design pattern to separate concerns"
-3. "All 2,000 lines of code is original and well-documented"
+3. "All 5,000+ lines of code are original and well-documented"
 4. "The financial system teaches budget management"
 5. "It works offline using browser storage"
 6. "I included comprehensive documentation and API references"
 7. "Zero external dependencies - pure vanilla JavaScript"
-8. "Exceeds FBLA requirements with 8 achievements and animations"
+8. "Exceeds FBLA requirements with 12 badges, tricks, chores, AI chat, and analytics"
 
 ---
 
@@ -427,8 +448,8 @@ A: Demonstrates mastery of fundamentals. Shows understanding of vanilla JavaScri
 ### Final Checklist
 
 **Code**:
-- ✅ All 6 modules complete and functional
-- ✅ 2,000+ lines of professional code
+- ✅ All 12 modules complete and functional
+- ✅ 5,000+ lines of professional code
 - ✅ Comprehensive comments and documentation
 - ✅ Multiple design patterns implemented
 

@@ -22,14 +22,16 @@
 | localStorage API | Web Standard | Data persistence |
 | DOM API | Web Standard | UI manipulation |
 
-### No External Dependencies
+### External Libraries in Use
 
-✅ **Zero external dependencies** - This application is built entirely with vanilla technologies  
-✅ **No CDN requirements** - All code is self-contained  
+| Library | Source | Purpose |
+|---------|--------|---------|
+| Chart.js | CDN (cdnjs) | Expense and stat history charts in the Reports tab |
+| Groq API | User-provided key | AI chat (Dr. Paws advisor) in the Chat tab |
+
 ✅ **No build tools needed** - Runs directly in browser  
 ✅ **No frameworks** - Pure JavaScript OOP  
-
-This demonstrates mastery of fundamental web technologies without relying on frameworks.
+✅ **No npm/Node dependencies** - Loads Chart.js from CDN; Groq key is optional and user-supplied
 
 ---
 
@@ -44,7 +46,6 @@ This demonstrates mastery of fundamental web technologies without relying on fra
 - 🐕 Dog: U+1F415
 - 🐱 Cat: U+1F431
 - 🐰 Rabbit: U+1F430
-- 🐹 Hamster: U+1F439
 - 🦜 Bird: U+1F99C
 
 **Attribution**: Emoji used under Unicode License Agreement
@@ -120,15 +121,19 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 
 While this application has no external dependencies, if derivatives wish to include open-source libraries:
 
-### Recommended Libraries (Optional Enhancements)
+### Active Libraries
 
-For potential future enhancements:
-
-1. **Chart.js** (Analytics)
+1. **Chart.js** (Analytics — currently used via CDN)
    - License: MIT
-   - URL: https://www.chartjs.org/
+   - Purpose: Renders expense breakdown and stat history charts in the Reports tab
 
-2. **Day.js** (Date/Time)
+2. **Groq API** (AI Chat — optional, user-supplied key)
+   - License: Groq Terms of Service
+   - Purpose: Powers the Dr. Paws AI chat advisor in the Chat tab
+
+### Optional Future Libraries
+
+1. **Day.js** (Date/Time)
    - License: MIT
    - URL: https://day.js.org/
 

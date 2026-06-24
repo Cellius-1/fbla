@@ -32,8 +32,9 @@ The Virtual Pet Simulator uses a professional three-layer architecture that sepa
 - Rules enforcement
 - Action validation
 - State management
-- Achievement checking
+- Badge checking
 - Financial calculations
+- Chores/income system coordination
 
 **Key Properties**:
 ```javascript
@@ -41,13 +42,15 @@ pet: Pet                          // The pet instance
 isRunning: boolean               // Game active state
 currentBudget: number            // Available funds
 totalSpent: number               // Total expenses
+totalEarned: number              // Coins earned from chores
+totalChoresDone: number          // Chores completed count
 difficulty: string               // 'easy', 'medium', 'hard'
-unlockedAchievements: array      // Achievement collection
 ```
 
 **Key Methods**:
 - `initializeGame()` - Set up new game
 - `performAction()` - Execute player action
+- `doChore()` - Complete a chore for income
 - `update()` - Game loop update
 - `saveGame()` / `loadGame()` - Persistence
 
@@ -58,17 +61,20 @@ unlockedAchievements: array      // Achievement collection
 - Stat calculations
 - Emotion determination
 - Sickness mechanics
+- Level/XP progression
 - Action effect application
 
 **Key Properties**:
 ```javascript
 name: string                     // Pet's name
-type: string                     // Pet type (dog, cat, etc.)
+type: string                     // Pet type ('dog', 'cat', 'rabbit', 'bird')
 hunger: number                   // 0-100
 energy: number                   // 0-100
 happiness: number                // 0-100
 cleanliness: number              // 0-100
 health: number                   // 0-100
+level: number                    // Current level (unlocks tricks)
+xp: number                       // Experience points
 ```
 
 **Key Methods**:
@@ -83,15 +89,18 @@ health: number                   // 0-100
 - DOM event listening
 - UI state updates
 - Modal management
+- Tab navigation (Care, Finance, Stats, Achievements, Scrapbook, Chat, Reports, Tricks, Chores, Help)
 - User input collection
 - Feedback display
 - Keyboard shortcuts
+- API key setup flow
 
 **Key Methods**:
 - `_performAction()` - Handle action button clicks
 - `_updateAllUI()` - Refresh all displays
 - `_handleFormSubmit()` - Setup form processing
-- `_openModal()` / `_closeModal()` - Modal management
+- `_openChatTab()` - Show chat or API key setup
+- `_saveApiKey()` - Persist Groq key to localStorage
 
 ### StorageManager Class (Persistence)
 
@@ -107,6 +116,55 @@ health: number                   // 0-100
 - `loadGame()` - Restore game state
 - `saveExpense()` - Track financial transactions
 - `exportData()` / `importData()` - Backup/restore
+
+### AICompanion Class (AI Chat)
+
+**Responsibilities**:
+- Groq API integration (streaming chat)
+- Stat-aware system prompt generation
+- Persistent chat history and memory
+- API key management via localStorage
+
+**Key Methods**:
+- `hasApiKey()` - Check if Groq key is configured
+- `setApiKey(key)` - Save key to instance + localStorage
+- `chatStream(msg, onToken, onComplete, onError)` - Streaming chat
+
+### ReportsCenter Class (Analytics)
+
+**Responsibilities**:
+- Chart.js chart rendering
+- Expense breakdown visualization
+- Stat history graphs
+- Weekly/daily cost analysis
+
+### Scrapbook Class (Memory)
+
+**Responsibilities**:
+- Auto-recording milestone moments
+- First-person narrative generation
+- Photo/moment storage in localStorage
+
+### PersonalityEngine Class (Adaptive AI)
+
+**Responsibilities**:
+- Tracking player behavior patterns
+- Adapting pet personality traits over time
+- Generating personality-driven responses
+
+### HelpCenter Class (FAQ)
+
+**Responsibilities**:
+- 20-item searchable FAQ
+- Category-based help topics
+- Keyword search across all topics
+
+### Validator Class (Input Validation)
+
+**Responsibilities**:
+- Centralized validation for all user inputs
+- Pet name, type, budget, difficulty validation
+- Groq API key format validation
 
 ## Data Flow Diagram
 
@@ -195,13 +253,28 @@ UI displays changes
 
 ```
 main.js
-├── constants.js (imports)
+├── constants.js
+├── icons.js
+├── PixelSprites.js
+├── Validator.js
+├── Pet.js
+├── StorageManager.js
 ├── Game.js
 │   ├── Pet.js
 │   └── StorageManager.js
+├── AICompanion.js
+│   └── (Groq API via fetch)
+├── PersonalityEngine.js
+├── Scrapbook.js
+├── ReportsCenter.js
+│   └── (Chart.js via CDN)
+├── HelpCenter.js
 └── UIController.js
-    ├── Game.js (reference)
-    └── constants.js (imports)
+    ├── Game.js
+    ├── AICompanion.js
+    ├── ReportsCenter.js
+    ├── HelpCenter.js
+    └── Scrapbook.js
 ```
 
 ## Initialization Sequence
@@ -244,10 +317,22 @@ virtual_pet_game_data_history
   └─ Stats history array (last 100 entries)
 
 virtual_pet_game_data_achievements
-  └─ Unlocked achievements array
+  └─ Unlocked badges array
 
 virtual_pet_game_data_expenses
   └─ Expense transactions (last 500 entries)
+
+petpal_groq_key
+  └─ User-provided Groq API key (set via UI)
+
+petpal_chat_history
+  └─ AI chat message history
+
+petpal_chat_memory
+  └─ AI companion extracted memory facts
+
+petpal_scrapbook
+  └─ Scrapbook milestone entries
 ```
 
 ## Performance Considerations

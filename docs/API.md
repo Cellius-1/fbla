@@ -6,8 +6,9 @@
 2. [Game Class API](#game-class-api)
 3. [UIController Class API](#uicontroller-class-api)
 4. [StorageManager Class API](#storagemanager-class-api)
-5. [Constants Reference](#constants-reference)
-6. [Type Definitions](#type-definitions)
+5. [AICompanion Class API](#aicompanion-class-api)
+6. [Constants Reference](#constants-reference)
+7. [Type Definitions](#type-definitions)
 
 ---
 
@@ -19,7 +20,7 @@
 /**
  * Create a new pet instance
  * @param {string} name - Pet's name (2-20 characters)
- * @param {string} type - Pet type ('dog', 'cat', 'rabbit', 'hamster', 'bird')
+ * @param {string} type - Pet type ('dog', 'cat', 'rabbit', 'bird')
  */
 const pet = new Pet('Buddy', 'dog');
 ```
@@ -529,6 +530,47 @@ const removed = storage.clearOldData(30);
 
 ---
 
+## AICompanion Class API
+
+### Constructor
+
+```javascript
+const ai = new AICompanion(game);
+// Loads saved Groq key from localStorage automatically
+```
+
+### Methods
+
+#### `hasApiKey()`
+
+```javascript
+ai.hasApiKey(); // Returns: boolean
+```
+
+Returns `true` if a Groq API key has been saved (key length > 10).
+
+#### `setApiKey(key)`
+
+```javascript
+ai.setApiKey('gsk_...');
+// Saves key to this._apiKey and localStorage('petpal_groq_key')
+```
+
+#### `chatStream(userMessage, onToken, onComplete, onError)`
+
+```javascript
+ai.chatStream(
+  'How is my pet feeling?',
+  (token) => console.log(token),        // streamed token
+  (fullText) => console.log(fullText),  // complete response
+  (err) => console.error(err)           // error handler
+);
+```
+
+Streams a response from the Groq API. Requires `hasApiKey()` to return `true`. The system prompt is built from the current pet stats, mood, and extracted memory facts.
+
+---
+
 ## Constants Reference
 
 ### GAME_CONFIG
@@ -584,18 +626,58 @@ ACTION_EFFECTS = {
 }
 ```
 
-### ACHIEVEMENTS
+### BADGES
+
+12 unlockable badges defined in `constants.js`:
 
 ```javascript
-ACHIEVEMENTS = {
-  GREAT_PARENT: {
-    id: 'great_parent',
-    title: '🏆 Great Parent',
-    description: 'Maintain all stats above 80%',
-    condition: (pet) => { ... }
-  },
-  // ... others
-}
+BADGES = [
+  { id: 'first_steps',  name: 'First Steps',    desc: 'Perform your first care action.' },
+  { id: 'feeding_pro',  name: 'Feeding Pro',     desc: 'Feed your pet 10 times.' },
+  { id: 'playmate',     name: 'Playmate',         desc: 'Play with your pet 20 times.' },
+  { id: 'night_owl',    name: 'Night Owl',        desc: 'Put your pet to sleep 10 times.' },
+  { id: 'clean_freak',  name: 'Clean Freak',      desc: 'Clean your pet 15 times.' },
+  { id: 'vet_regular',  name: 'Vet Regular',      desc: 'Visit the vet 5 times.' },
+  { id: 'chore_star',   name: 'Chore Star',       desc: 'Complete 10 chores.' },
+  { id: 'money_maker',  name: 'Money Maker',      desc: 'Earn 200 coins from chores.' },
+  { id: 'big_saver',    name: 'Big Saver',        desc: 'Earn 500 coins total.' },
+  { id: 'level_five',   name: 'Growing Up',       desc: 'Reach Level 5.' },
+  { id: 'level_ten',    name: 'Pet Master',       desc: 'Reach Level 10.' },
+  { id: 'all_well',     name: 'Perfect Care',     desc: 'Keep all stats above 70 simultaneously.' }
+]
+```
+
+### TRICKS
+
+9 tricks unlocked by pet level:
+
+```javascript
+TRICKS = [
+  { id: 'sit',       name: 'Sit',              level: 2  },
+  { id: 'shake',     name: 'Shake Hands',      level: 3  },
+  { id: 'roll_over', name: 'Roll Over',         level: 4  },
+  { id: 'dance',     name: 'Dance',             level: 5  },
+  { id: 'spin',      name: 'Spin',              level: 6  },
+  { id: 'jump',      name: 'High Jump',         level: 7  },
+  { id: 'speak',     name: 'Speak',             level: 8  },
+  { id: 'handstand', name: 'Handstand',         level: 9  },
+  { id: 'perform',   name: 'Grand Performance', level: 10 }
+]
+```
+
+### CHORES
+
+6 chores that earn coins (cooldown in ms):
+
+```javascript
+CHORES = [
+  { id: 'dishes',    name: 'Wash the Dishes',    reward: 20, cooldown: 5min  },
+  { id: 'room',      name: 'Clean Your Room',    reward: 25, cooldown: 15min },
+  { id: 'plants',    name: 'Water the Plants',   reward: 15, cooldown: 10min },
+  { id: 'trash',     name: 'Take Out the Trash', reward: 15, cooldown: 10min },
+  { id: 'dog_walk',  name: "Walk Neighbor's Dog",reward: 35, cooldown: 30min },
+  { id: 'groceries', name: 'Help with Groceries',reward: 30, cooldown: 20min }
+]
 ```
 
 ---
