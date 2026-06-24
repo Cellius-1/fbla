@@ -118,12 +118,12 @@ const STAT_DEGRADATION = {
 
 // ─── Chores (income system) ────────────────────────────────────────────────────
 const CHORES = [
-    { id: 'dishes',     name: 'Wash the Dishes',      icon: 'feed',          reward: 20, xp: 10, cooldown: 5  * 60000, desc: 'A quick chore for some coins.' },
-    { id: 'room',       name: 'Clean Your Room',       icon: 'sparkle',       reward: 25, xp: 15, cooldown: 15 * 60000, desc: 'Tidy up for a decent reward.' },
-    { id: 'plants',     name: 'Water the Plants',      icon: 'heart',         reward: 15, xp:  8, cooldown: 10 * 60000, desc: 'Help the garden grow.' },
-    { id: 'trash',      name: 'Take Out the Trash',    icon: 'trash',         reward: 15, xp:  8, cooldown: 10 * 60000, desc: 'Keep the house clean.' },
-    { id: 'dog_walk',   name: "Walk Neighbor's Dog",   icon: 'paw',           reward: 35, xp: 20, cooldown: 30 * 60000, desc: 'Earn big for a longer task.' },
-    { id: 'groceries',  name: 'Help with Groceries',   icon: 'coin',          reward: 30, xp: 15, cooldown: 20 * 60000, desc: 'Carry bags for extra coins.' }
+    { id: 'dishes',     name: 'Wash the Dishes',      icon: 'feed',          reward: 20, xp: 10, cooldown: 1 * 60000, desc: 'A quick chore for some coins.' },
+    { id: 'room',       name: 'Clean Your Room',       icon: 'sparkle',       reward: 25, xp: 15, cooldown: 3 * 60000, desc: 'Tidy up for a decent reward.' },
+    { id: 'plants',     name: 'Water the Plants',      icon: 'heart',         reward: 15, xp:  8, cooldown: 2 * 60000, desc: 'Help the garden grow.' },
+    { id: 'trash',      name: 'Take Out the Trash',    icon: 'trash',         reward: 15, xp:  8, cooldown: 2 * 60000, desc: 'Keep the house clean.' },
+    { id: 'dog_walk',   name: "Walk Neighbor's Dog",   icon: 'paw',           reward: 35, xp: 20, cooldown: 3 * 60000, desc: 'Earn big for a longer task.' },
+    { id: 'groceries',  name: 'Help with Groceries',   icon: 'coin',          reward: 30, xp: 15, cooldown: 3 * 60000, desc: 'Carry bags for extra coins.' }
 ];
 
 // ─── Badges ───────────────────────────────────────────────────────────────────
