@@ -3,10 +3,7 @@
  * Groq-powered chat system with personality, stat-awareness, and persistent memory.
  */
 
-// ── Replace the value below with your Groq API key ──────────────────────────
-const GROQ_API_KEY = 'YOUR_GROQ_API_KEY_HERE';
-const GROQ_MODEL   = 'llama-3.1-8b-instant';
-// ────────────────────────────────────────────────────────────────────────────
+const GROQ_MODEL = 'llama-3.1-8b-instant';
 
 class AICompanion {
     constructor(game) {
@@ -14,10 +11,16 @@ class AICompanion {
         this.history = this._loadHistory();
         this.memory  = this._loadMemory();
         this.isStreaming = false;
+        this._apiKey = localStorage.getItem('petpal_groq_key') || '';
     }
 
     hasApiKey() {
-        return GROQ_API_KEY !== 'YOUR_GROQ_API_KEY_HERE' && GROQ_API_KEY.length > 10;
+        return this._apiKey.length > 10;
+    }
+
+    setApiKey(key) {
+        this._apiKey = key;
+        localStorage.setItem('petpal_groq_key', key);
     }
 
     // ── Persistence ──────────────────────────────────────────────────────────
@@ -171,7 +174,7 @@ RULES:
             const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${GROQ_API_KEY}`,
+                    'Authorization': `Bearer ${this._apiKey}`,
                     'Content-Type':  'application/json'
                 },
                 body: JSON.stringify({

@@ -1034,6 +1034,13 @@ class UIController {
         if (!this.ai) return;
         const setupEl = document.getElementById('apiKeySetup');
         const chatEl  = document.getElementById('chatWindow');
+
+        if (!this.ai.hasApiKey()) {
+            if (setupEl) setupEl.style.display = 'block';
+            if (chatEl)  chatEl.style.display  = 'none';
+            return;
+        }
+
         if (setupEl) setupEl.style.display = 'none';
         if (!chatEl) return;
         chatEl.style.display = 'flex';
