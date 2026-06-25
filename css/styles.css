@@ -1255,6 +1255,22 @@ h5 { font-size: 0.5625rem; }
   text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
 }
 
+/* Health stat toggle buttons */
+.report-stat-toggles { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-4); flex-wrap: wrap; }
+.stat-toggle-btn {
+  padding: 4px 9px;
+  font-family: var(--font-pixel); font-size: 0.3rem; letter-spacing: 0.04em;
+  color: var(--text-2); background: var(--surface); border: 2px solid var(--border-2);
+  cursor: pointer; image-rendering: pixelated; opacity: 0.45;
+  transition: opacity 60ms steps(1), border-color 60ms steps(1), color 60ms steps(1);
+}
+.stat-toggle-btn:hover { opacity: 0.75; }
+.stat-toggle-btn.active {
+  border-color: var(--toggle-color, var(--primary));
+  color: var(--toggle-color, var(--primary));
+  opacity: 1;
+}
+
 /* Report cards */
 .report-card {
   background: var(--surface); border: 3px solid var(--border-2);

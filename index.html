@@ -809,6 +809,16 @@
                                 <button class="report-dl-btn" data-report="health"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16" style="image-rendering:pixelated;image-rendering:crisp-edges" aria-hidden="true"><rect x="6" y="1" width="4" height="8" fill="currentColor"/><rect x="4" y="7" width="8" height="2" fill="currentColor"/><rect x="5" y="9" width="6" height="2" fill="currentColor"/><rect x="7" y="11" width="2" height="2" fill="currentColor"/><rect x="1" y="13" width="14" height="3" fill="currentColor"/></svg> Save</button>
                             </div>
                             <div class="report-stat-row" id="healthStatRow"></div>
+                            <div class="report-stat-toggles" id="healthStatToggles">
+                                <span class="report-filter-label">Stats:</span>
+                                <div class="report-filter-btns">
+                                    <button class="stat-toggle-btn active" data-stat="health"      style="--toggle-color:#118833">Health</button>
+                                    <button class="stat-toggle-btn active" data-stat="happiness"   style="--toggle-color:#dd1060">Happiness</button>
+                                    <button class="stat-toggle-btn active" data-stat="hunger"      style="--toggle-color:#cc6600">Hunger</button>
+                                    <button class="stat-toggle-btn active" data-stat="energy"      style="--toggle-color:#6366f1">Energy</button>
+                                    <button class="stat-toggle-btn active" data-stat="cleanliness" style="--toggle-color:#06b6d4">Cleanliness</button>
+                                </div>
+                            </div>
                             <div class="report-chart-box report-chart-full">
                                 <canvas id="healthLineChart"></canvas>
                             </div>

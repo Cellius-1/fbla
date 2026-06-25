@@ -219,7 +219,7 @@ class ReportsCenter {
 
         const pxFont = { family: "'Press Start 2P', monospace", size: 7 };
         const ds = (key, color, bg) => ({
-            label: STAT_ICONS[key] + ' ' + key.charAt(0).toUpperCase() + key.slice(1),
+            label: key.charAt(0).toUpperCase() + key.slice(1),
             data:            sampled.map(h => h[key]),
             borderColor:     color,
             backgroundColor: bg,
@@ -230,14 +230,30 @@ class ReportsCenter {
             fill:            true
         });
 
-        this._chart('healthLineChart', 'line', {
-            labels,
-            datasets: [
-                ds('health',    '#118833', 'rgba(17,136,51,0.15)'),
-                ds('happiness', '#dd1060', 'rgba(221,16,96,0.12)'),
-                ds('hunger',    '#cc6600', 'rgba(204,102,0,0.10)')
-            ]
-        }, {
+        // Read which stat toggles are active; default to all if buttons aren't in DOM yet
+        const toggleBtns  = document.querySelectorAll('#healthStatToggles .stat-toggle-btn');
+        const activeStats = toggleBtns.length
+            ? [...toggleBtns].filter(b => b.classList.contains('active')).map(b => b.dataset.stat)
+            : ['health', 'happiness', 'hunger', 'energy', 'cleanliness'];
+
+        const statDefs = [
+            { key: 'health',      color: '#118833', bg: 'rgba(17,136,51,0.15)'  },
+            { key: 'happiness',   color: '#dd1060', bg: 'rgba(221,16,96,0.12)'  },
+            { key: 'hunger',      color: '#cc6600', bg: 'rgba(204,102,0,0.10)'  },
+            { key: 'energy',      color: '#6366f1', bg: 'rgba(99,102,241,0.10)' },
+            { key: 'cleanliness', color: '#06b6d4', bg: 'rgba(6,182,212,0.08)'  },
+        ];
+
+        const datasets = statDefs
+            .filter(s => activeStats.includes(s.key))
+            .map(s => ds(s.key, s.color, s.bg));
+
+        if (!datasets.length) {
+            this._noData('healthLineChart', 'Select at least one stat above to display.');
+            return;
+        }
+
+        this._chart('healthLineChart', 'line', { labels, datasets }, {
             scales: {
                 x: { ticks: { color: '#4a3868', maxTicksLimit: 8, font: pxFont }, grid: { color: 'rgba(0,0,0,0.07)' } },
                 y: { min: 0, max: 100, ticks: { color: '#4a3868', stepSize: 20, font: pxFont }, grid: { color: 'rgba(0,0,0,0.09)' } }

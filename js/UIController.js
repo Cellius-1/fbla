@@ -304,6 +304,19 @@ class UIController {
         document.querySelectorAll('.report-dl-btn').forEach(btn => {
             btn.addEventListener('click', () => this.reports.download(btn.dataset.report));
         });
+        // Reports — health stat toggles (click to show/hide individual stat lines)
+        document.querySelectorAll('.stat-toggle-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                this.reports.renderAll();
+            });
+            // Replace placeholder text with the project's pixel SVG icons
+            if (typeof Icons !== 'undefined') {
+                const iconKey  = STAT_ICONS[btn.dataset.stat];
+                const statName = btn.dataset.stat.charAt(0).toUpperCase() + btn.dataset.stat.slice(1);
+                btn.innerHTML  = `${Icons.pixelSvg(iconKey, 10)} ${statName}`;
+            }
+        });
 
         // Scrapbook search + filter
         const scrapInput = document.getElementById('scrapSearch');
