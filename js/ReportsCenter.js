@@ -252,13 +252,25 @@ class ReportsCenter {
         const badges = this.game.unlockedBadges?.length || 0;
         const tricks = pet?.tricks?.length || 0;
         const level  = pet?.level || 1;
-        const xp     = pet?.xp   || 0;
+
+        // XP earned in the selected period: sum action XP from filtered expenses
+        // plus XP from filtered chore completions in the income ledger.
+        const exps     = this._filterTs(this.game.storage.loadExpenses());
+        const income   = this._filterTs(this.game.storage.loadIncome());
+        const actionXp = exps.reduce((sum, e) => sum + (ACTIONS[e.action]?.xp || 0), 0);
+        const choreXp  = income
+            .filter(i => i.source === 'chore')
+            .reduce((sum, i) => {
+                const chore = CHORES.find(c => c.id === i.choreId);
+                return sum + (chore?.xp || 0);
+            }, 0);
+        const periodXp = actionXp + choreXp;
 
         this._statRow('achievementStatRow', [
-            [`${badges}/12`, 'Badges Earned',  '#b87800'],
-            [`${tricks}/9`,  'Tricks Learned', '#7711aa'],
-            [`${level}/10`,  'Level Reached',  '#118833'],
-            [xp + ' XP',    'Total XP',        '#0088bb']
+            [`${badges}/12`,   'Badges Earned',  '#b87800'],
+            [`${tricks}/9`,    'Tricks Learned', '#7711aa'],
+            [`${level}/10`,    'Level Reached',  '#118833'],
+            [periodXp + ' XP', 'XP This Period', '#0088bb']
         ]);
 
         // Horizontal stacked bar
@@ -308,25 +320,35 @@ class ReportsCenter {
     // ── CARE HISTORY REPORT ───────────────────────────────────────────────────
 
     _renderCare() {
-        const pet    = this.game.pet;
-        const feeds  = pet?.feedCount  || 0;
-        const plays  = pet?.playCount  || 0;
+        const pet = this.game.pet;
+
+        // Use filtered ledgers so action counts respect the selected date range.
+        // Sleep has cost:0 and is not persisted to the expense log — its count
+        // falls back to the all-time pet counter and is labelled accordingly.
+        const exps   = this._filterTs(this.game.storage.loadExpenses());
+        const income = this._filterTs(this.game.storage.loadIncome());
+
+        const feeds  = exps.filter(e => e.action === 'feed').length;
+        const plays  = exps.filter(e => e.action === 'play').length;
+        const cleans = exps.filter(e => e.action === 'clean').length;
+        const vets   = exps.filter(e => e.action === 'vet').length;
         const sleeps = pet?.sleepCount || 0;
-        const cleans = pet?.cleanCount || 0;
-        const vets   = pet?.vetCount   || 0;
-        const chores = this.game.totalChoresDone || 0;
+        const chores = income.filter(i => i.source === 'chore').length;
         const total  = feeds + plays + sleeps + cleans + vets;
-        const days   = Math.max(1, Math.ceil((Date.now() - (this.game.startDate || Date.now())) / 86400000));
+
+        const cutoff      = this._cutoff();
+        const periodStart = cutoff || (this.game.startDate || Date.now());
+        const days        = Math.max(1, Math.ceil((Date.now() - periodStart) / 86400000));
 
         this._statRow('careStatRow', [
-            [total,                  'Total Actions',   '#7711aa'],
-            [days,                   'Days Active',     '#118833'],
-            [chores,                 'Chores Done',     '#b87800'],
-            [(total / days).toFixed(1), 'Actions / Day', '#0088bb']
+            [total,                     'Total Actions',  '#7711aa'],
+            [days,                      'Days in Period', '#118833'],
+            [chores,                    'Chores Done',    '#b87800'],
+            [(total / days).toFixed(1), 'Actions / Day',  '#0088bb']
         ]);
 
         this._chart('careBarChart', 'bar', {
-            labels: ['Feed', 'Play', 'Sleep', 'Clean', 'Vet'],
+            labels: ['Feed', 'Play', 'Sleep*', 'Clean', 'Vet'],
             datasets: [{
                 label: 'Times Performed',
                 data:  [feeds, plays, sleeps, cleans, vets],
@@ -418,10 +440,15 @@ class ReportsCenter {
             if (pet?.isSick) lines.push('', '  [!] Pet is currently sick — visit the vet!');
 
         } else if (type === 'achievement') {
-            const earned = this.game.unlockedBadges || [];
-            const tricks = pet?.tricks || [];
+            const earned   = this.game.unlockedBadges || [];
+            const tricks   = pet?.tricks || [];
+            const exps     = this._filterTs(this.game.storage.loadExpenses());
+            const income   = this._filterTs(this.game.storage.loadIncome());
+            const actionXp = exps.reduce((sum, e) => sum + (ACTIONS[e.action]?.xp || 0), 0);
+            const choreXp  = income.filter(i => i.source === 'chore')
+                .reduce((sum, i) => { const c = CHORES.find(ch => ch.id === i.choreId); return sum + (c?.xp || 0); }, 0);
             lines.push('', `  Level          : ${pet?.level || 1} / 10`,
-                `  Total XP       : ${pet?.xp || 0}`,
+                `  XP This Period : ${actionXp + choreXp}`,
                 `  Badges Earned  : ${earned.length} / 12`,
                 `  Tricks Learned : ${tricks.length} / 9`);
             lines.push('', '  BADGES:');
@@ -430,17 +457,27 @@ class ReportsCenter {
             TRICKS.forEach(t => lines.push(`    ${tricks.includes(t.id)?'[✓]':'[ ]'} ${t.name.padEnd(20)} Unlocks at Level ${t.level}`));
 
         } else if (type === 'care') {
-            const f=pet?.feedCount||0, p=pet?.playCount||0, sl=pet?.sleepCount||0,
-                  cl=pet?.cleanCount||0, v=pet?.vetCount||0, ch=this.game.totalChoresDone||0;
-            const days = Math.max(1, Math.ceil((Date.now()-(this.game.startDate||Date.now()))/86400000));
-            const total = f+p+sl+cl+v;
-            lines.push('', `  Days Active    : ${days}`,
+            const exps   = this._filterTs(this.game.storage.loadExpenses());
+            const income = this._filterTs(this.game.storage.loadIncome());
+            const f  = exps.filter(e => e.action === 'feed').length;
+            const p  = exps.filter(e => e.action === 'play').length;
+            const cl = exps.filter(e => e.action === 'clean').length;
+            const v  = exps.filter(e => e.action === 'vet').length;
+            const sl = pet?.sleepCount || 0;
+            const ch = income.filter(i => i.source === 'chore').length;
+            const cutoff      = this._cutoff();
+            const periodStart = cutoff || (this.game.startDate || Date.now());
+            const days  = Math.max(1, Math.ceil((Date.now() - periodStart) / 86400000));
+            const total = f + p + sl + cl + v;
+            lines.push('', `  Days in Period : ${days}`,
                 `  Total Actions  : ${total}`,
                 `  Actions / Day  : ${(total/days).toFixed(1)}`,
                 `  Chores Done    : ${ch}`,
                 '', '  ACTION BREAKDOWN:',
-                `    Feed           : ${f}`, `    Play           : ${p}`,
-                `    Sleep          : ${sl}`, `    Clean          : ${cl}`,
+                `    Feed           : ${f}`,
+                `    Play           : ${p}`,
+                `    Sleep          : ${sl} (all-time — free action, not date-filtered)`,
+                `    Clean          : ${cl}`,
                 `    Vet            : ${v}`);
         }
 
