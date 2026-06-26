@@ -1,334 +1,138 @@
-# 🐾 Virtual Pet Simulator - FBLA Competition Application
+# PetPal AI — FBLA Introduction to Programming 2025-2026
 
-## Executive Summary
-
-**Virtual Pet Simulator** is an industry-standard, feature-complete web application designed to teach financial responsibility and pet care management. This application demonstrates advanced programming skills including object-oriented design, state management, data persistence, and professional UI/UX principles.
-
-**Grade Level**: Introduction to Programming (FBLA)  
-**Development Standard**: Professional/Industry Level  
-**Technologies**: HTML5, CSS3, Vanilla JavaScript (ES6+)
+**Developer:** Cellius-1
+**Event:** Introduction to Programming — High School Division
+**Technologies:** HTML5, CSS3, Vanilla JavaScript (ES6+), Chart.js, Groq API
 
 ---
 
-## Table of Contents
+## 2025-2026 Topic Correlation
 
-1. [Features Overview](#features-overview)
-2. [Getting Started](#getting-started)
-3. [How to Play](#how-to-play)
-4. [Technical Architecture](#technical-architecture)
-5. [Code Quality Standards](#code-quality-standards)
-6. [Project Structure](#project-structure)
-7. [Scoring Rubric Alignment](#scoring-rubric-alignment)
-8. [Credits & Resources](#credits--resources)
+**Topic:** *Build a Virtual Pet* — Create a digital pet that users can name, feed, and care for over time. The pet should respond to how well it is treated, showing emotions, changing appearance or behavior, and developing based on the user's actions. Include a "cost of care" system to teach users about the financial responsibility of pet ownership.
 
----
+The table below maps every requirement from the official topic to the specific feature in PetPal AI that addresses it.
 
-## Features Overview ✅
-
-### Core Functionality
-
-- **🎮 Pet Customization**: 4 pet types (Dog, Cat, Rabbit, Bird) with customizable names
-- **💰 Financial System**: Budget tracking with 3 difficulty levels
-- **🏥 Pet Care**: 6 different care actions with realistic costs
-- **📊 Advanced Stats**: 5 interconnected stat systems (hunger, energy, happiness, cleanliness, health)
-- **😊 Emotions**: 8 distinct emotions based on pet state
-- **🏆 Badges**: 12 unlockable badges for gameplay milestones
-- **🎓 Tricks**: 9 tricks unlocked as your pet levels up
-- **🧹 Chores**: 6 chores that earn coins to extend your budget
-- **🤖 AI Chat**: Groq-powered Dr. Paws advisor (enter your key in the Chat tab)
-- **📈 Reports**: Chart.js expense and stat history analytics
-- **💾 Data Persistence**: Browser localStorage for game saving
-- **🎨 Professional UI**: Responsive design with smooth animations
-- **⌨️ Keyboard Shortcuts**: Hotkeys for power users
-- **📱 Mobile Ready**: Fully responsive on all devices
+| Topic Requirement | How PetPal AI Addresses It |
+|---|---|
+| User names the pet, chooses type | 3-step setup wizard — name (validated), pet type (Dog/Cat/Rabbit/Bird), color, and personality |
+| Feed, play, rest, clean, health check | Five care actions: Feed, Play, Sleep, Clean, Vet — each with real coin costs and stat effects |
+| Reactions based on care level | 8 distinct emotions (ecstatic, happy, neutral, sad, hungry, tired, sick, dirty) driven live by stat values |
+| Changing appearance or behavior | Pixel sprite renderer updates the pet's displayed frame based on current emotion and action state |
+| Developing based on user's actions | XP and leveling system (10 levels); personality traits shift over time based on how often the user feeds vs. plays |
+| Food and supply costs | Feed costs 15 coins, Play costs 10 coins, Clean costs 12 coins |
+| Vet visits or health care | Vet costs 35 coins; sickness mechanic forces urgent vet visits |
+| Budget limits or in-game currency | Coin system with a starting balance; actions are disabled when the player cannot afford them |
+| Running total of care-related expenses | Finance tab shows total spent, spending by category, daily average, and monthly bar chart |
+| Optional — earning system | 6 chores (Wash Dishes, Clean Room, Water Plants, etc.) earn coins and XP on a cooldown timer |
+| Optional — learn tricks | 9 tricks unlock automatically as the pet reaches each level milestone |
+| Optional — earn badges | 12 badges unlock when specific milestones are reached (e.g. 10 feeds, happy streak, max level) |
 
 ---
 
-## Getting Started
+## How to Run
 
-### How to Open
-
-1. Locate and open `index.html` in any web browser
-2. Complete the pet setup form
-3. Click "Create My Pet" to begin
-4. No installation required!
-
-### Browser Requirements
-
-- Modern browser with ES6+ support
-- ~5MB localStorage space available
-- JavaScript enabled
+1. Open `index.html` in any modern browser (Chrome, Firefox, Safari, Edge)
+2. No installation or internet connection required for core gameplay
+3. Complete the 3-step setup wizard to create your pet
+4. Use the tabs (Care, Finance, Growth, Chores, History, Memories, Chat, Reports) to manage and analyze your pet
 
 ---
 
-## How to Play
+## How to Use
 
-### Setup Phase
-
-1. **Enter Pet Name**: 2-20 characters
-2. **Select Pet Type**: Dog, Cat, Rabbit, or Bird
-3. **Choose Difficulty**: Easy, Medium, or Hard (affects costs)
-4. **Set Budget**: Starting money ($100-$2,000)
-5. **Play!**
+### Setup Wizard
+- **Step 1** — Choose a pet type (Dog, Cat, Rabbit, or Bird)
+- **Step 2** — Choose a color and personality (each personality has a unique gameplay effect)
+- **Step 3** — Name your pet (2–20 characters, letters/numbers/hyphens/apostrophes only)
 
 ### Care Actions
-
-| Action | Cost | Effect |
-|--------|------|--------|
-| 🍖 Feed | $5 | Reduce hunger, maintain health |
-| 🎮 Play | $3 | Increase happiness, build bond |
-| 😴 Rest | Free | Restore energy and health |
-| 🚿 Clean | $4 | Maintain hygiene, prevent illness |
-| ⚕️ Health Check | $10 | Monitor and treat health issues |
-| 🧸 Buy Toy | $8 | Increase happiness, unlock tricks |
+| Action | Cost | Primary Effect |
+|---|---|---|
+| Feed | 15 coins | Restores hunger; small happiness and health boost |
+| Play | 10 coins | Raises happiness; costs energy and hunger |
+| Sleep | Free | Restores energy; small health boost |
+| Clean | 12 coins | Restores cleanliness; health and happiness boost |
+| Vet | 35 coins | Restores health; cures sickness |
 
 ### Keyboard Shortcuts
+| Key | Action |
+|---|---|
+| F | Feed |
+| P | Play |
+| S | Sleep |
+| C | Clean |
+| V | Vet |
+| Ctrl+S | Save game |
+| ? | Open help |
 
-- **F**: Feed | **P**: Play | **R**: Rest | **C**: Clean
-- **H**: Health Check | **T**: Buy Toy | **?**: Help
-- **Ctrl+S**: Save | **Esc**: Close modals
+### Tabs
+- **Care** — Main dashboard with pet stats and action buttons
+- **Finance** — Spending breakdown by category and transaction history
+- **Growth** — XP progress, badges, tricks, and personality traits
+- **Chores** — Earn coins and XP by completing timed chores
+- **History** — Timestamped activity log
+- **Memories** — Auto-recorded scrapbook of milestone moments
+- **Chat** — AI advisor (Dr. Paws) powered by Groq — requires a free Groq API key
+- **Reports** — Chart.js analytics with date range filter and downloadable reports
 
-### Winning Strategies
-
-✅ Balance all stat maintenance  
-✅ Monitor weekly spending  
-✅ Perform preventive health checks  
-✅ Unlock achievements  
-✅ Save frequently  
+### Reports
+Four report types are available, each with a date range filter (7 / 30 / 90 days / All Time) and a Save button that downloads a formatted `.txt` file:
+- **Expense Report** — spending by category (doughnut chart) and monthly totals (bar chart)
+- **Health Report** — line chart of all 5 stats over time; toggle individual stats on/off
+- **Achievement Report** — badge and trick progress (stacked bar); XP earned in the selected period
+- **Care History Report** — count of each care action performed in the selected period
 
 ---
 
-## Technical Architecture
-
-### Project Structure
+## Project Structure
 
 ```
 fbla/
-├── index.html              Main application file (988 lines)
+├── index.html               Main application (single-page)
 ├── css/
-│   ├── styles.css         Main stylesheet (1,900+ lines)
-│   └── animations.css     Animations (256 lines)
+│   ├── styles.css           Main stylesheet
+│   └── animations.css       Keyframe animations
 ├── js/
-│   ├── constants.js       Game configuration & data
-│   ├── icons.js           SVG icon library
-│   ├── PixelSprites.js    Pixel art pet sprites
-│   ├── Validator.js       Input validation
-│   ├── Pet.js             Pet model
-│   ├── StorageManager.js  Data persistence
-│   ├── Game.js            Game controller
-│   ├── AICompanion.js     Groq AI chat
-│   ├── PersonalityEngine.js Adaptive pet personality
-│   ├── Scrapbook.js       Milestone memory journal
-│   ├── ReportsCenter.js   Chart.js analytics
-│   ├── HelpCenter.js      Searchable FAQ
-│   ├── UIController.js    UI management
-│   └── main.js            Entry point
-├── docs/                  Documentation files
-├── README.md             This file
-└── RESOURCES.md          Libraries & credits
-```
-
-### Code Organization
-
-**12 Professional Modules**: ~5,100 lines of well-documented code
-
-- **constants.js** (187 lines): Configuration, pet types, badges, tricks, chores
-- **Pet.js** (228 lines): Pet model, stats, level/XP
-- **Game.js** (331 lines): Game rules, loop, chores income
-- **StorageManager.js** (82 lines): Data persistence
-- **AICompanion.js** (239 lines): Groq streaming chat, key management
-- **PersonalityEngine.js** (240 lines): Adaptive personality traits
-- **Scrapbook.js** (425 lines): Auto-recorded milestone journal
-- **ReportsCenter.js** (442 lines): Chart.js analytics
-- **HelpCenter.js** (710 lines): 20-item searchable FAQ
-- **UIController.js** (1,200 lines): Full UI management across 9 tabs
-- **Validator.js** (220 lines): Centralized input validation
-- **main.js** (47 lines): Application bootstrap
-
-### Design Patterns
-
-✅ **Model-View-Controller (MVC)**: Clean separation of concerns  
-✅ **Object-Oriented Programming**: Encapsulated classes  
-✅ **State Management**: Centralized game state  
-✅ **Data Persistence**: Browser localStorage  
-✅ **Event-Driven Architecture**: Reactive UI updates  
-
----
-
-## Code Quality Standards ✅ EXCEEDS FBLA RUBRIC
-
-### Comments & Naming (10/10)
-- ✅ Logical, useful comments throughout
-- ✅ Descriptive function names (e.g., `updateStatBars()`, `checkSickness()`)
-- ✅ Constants with UPPER_SNAKE_CASE
-- ✅ Complete JSDoc documentation
-
-### Modular Structure (10/10)
-- ✅ 6 well-organized modules
-- ✅ Clear separation of concerns
-- ✅ Single responsibility principle
-- ✅ Reusable, maintainable code
-
-### User Interface (10/10)
-- ✅ Intuitive design with clear instructions
-- ✅ Comprehensive help system (8 sections)
-- ✅ Interactive modals for feedback
-- ✅ No spelling errors
-- ✅ Keyboard shortcuts for power users
-
-### Input Validation (5/5)
-- ✅ Syntactical validation (text length, number ranges)
-- ✅ Semantic validation (pet type, difficulty)
-- ✅ Real-time error feedback
-- ✅ User-friendly error messages
-
-### Functionality (20/20)
-- ✅ Addresses ALL prompt requirements
-- ✅ Pet customization
-- ✅ Comprehensive pet care system
-- ✅ Emotional responses based on care
-- ✅ Complete financial responsibility system
-- ✅ Budget limits with in-game currency
-- ✅ Optional features: achievements, evolution
-
-### Data Storage (5/5)
-- ✅ Complex data structures (objects, arrays)
-- ✅ Clear variable naming
-- ✅ Dynamic updates
-- ✅ Proper data types
-- ✅ Correct scope management
-
-### Documentation (20/20)
-- ✅ Comprehensive README
-- ✅ Well-organized source code
-- ✅ All libraries documented
-- ✅ Proper attribution and credits
-
-**Expected Final Score: 95-100/100** ✅
-
----
-
-## Features Exceeding Prompt Requirements
-
-Beyond basic requirements, this application includes:
-
-🌟 **Badge System** (12 unlockable badges)  
-🌟 **Tricks System** (9 tricks unlocked by leveling up)  
-🌟 **Chores Income System** (6 chores that earn coins)  
-🌟 **AI Chat Advisor** (Groq-powered Dr. Paws, stat-aware streaming chat)  
-🌟 **Analytics Reports** (Chart.js expense and stat history)  
-🌟 **Scrapbook Journal** (auto-recorded milestone memories)  
-🌟 **Personality Traits** (Each pet has unique traits)  
-🌟 **Sickness Mechanics** (Realistic health management)  
-🌟 **Weekly Cost Analysis** (Financial reporting)  
-🌟 **Local Storage Persistence** (Cross-session saves)  
-🌟 **Professional UI/UX** (Responsive, accessible design)  
-🌟 **Keyboard Navigation** (Power user hotkeys)  
-🌟 **Debug Console** (Developer tools)  
-🌟 **Animations** (Smooth transitions and feedback)  
-
----
-
-## Scoring Rubric Alignment
-
-### Code Quality (20 points)
-✅ **Excellent**: Comments, naming, and structure exceed expectations
-
-### User Experience (20 points)
-✅ **Excellent**: Intuitive UI with clear instructions and navigation
-
-### Input Validation (5 points)
-✅ **Exceeds**: Both syntactical and semantic validation applied
-
-### Functionality (20 points)
-✅ **Exceeds**: All requirements + extra features
-
-### Data Storage (5 points)
-✅ **Exceeds**: Complex data structures with proper scope
-
-### Documentation (20 points)
-✅ **Excellent**: Comprehensive, well-organized, properly attributed
-
----
-
-## Quick Start Commands
-
-### In Browser Console (F12)
-
-```javascript
-// Get game statistics
-DEBUG.getGameState()
-
-// Modify pet stats (for testing)
-DEBUG.setStat('hunger', 50)
-
-// Add money (cheat)
-DEBUG.addMoney(100)
-
-// Export game data
-DEBUG.exportData()
-
-// Reset everything
-DEBUG.clearData()
+│   ├── constants.js         All game config, costs, effects, badge/trick/chore definitions
+│   ├── icons.js             Pixel SVG icon library
+│   ├── PixelSprites.js      Animated pixel art pet renderer
+│   ├── Validator.js         Centralized input validation (syntactical + semantic)
+│   ├── Pet.js               Pet model — stats, XP, leveling, tick decay
+│   ├── StorageManager.js    localStorage persistence (game, expenses, income)
+│   ├── Game.js              Game coordinator — actions, chores, badges, save/load
+│   ├── AICompanion.js       Groq streaming chat integration
+│   ├── PersonalityEngine.js Adaptive personality trait system
+│   ├── Scrapbook.js         Auto-recorded milestone memory journal
+│   ├── ReportsCenter.js     Chart.js analytics with date filtering and downloads
+│   ├── HelpCenter.js        Searchable FAQ with 20+ entries
+│   ├── UIController.js      All DOM interaction and game loop
+│   └── main.js              Application entry point
+├── docs/                    Additional technical documentation
+├── README.md                This file
+└── RESOURCES.md             Libraries and attribution
 ```
 
 ---
 
-## Files Included
+## Features Beyond the Required Prompt
 
-| File | Purpose |
-|------|---------|
-| `index.html` | Main application interface |
-| `css/styles.css` | Main stylesheet (~900 lines) |
-| `css/animations.css` | Animation definitions (~400 lines) |
-| `js/constants.js` | Configuration constants |
-| `js/Pet.js` | Pet class and logic |
-| `js/Game.js` | Game management |
-| `js/StorageManager.js` | Data persistence |
-| `js/UIController.js` | UI management |
-| `js/main.js` | Application entry point |
-| `README.md` | This documentation |
-| `RESOURCES.md` | Attribution and libraries |
-| `docs/` | Additional documentation |
+| Feature | Description |
+|---|---|
+| Personality Engine | Each personality (Friendly, Energetic, Shy, Wise, Funny) permanently changes how stats are affected, creating different gameplay strategies |
+| Sickness mechanic | 3% random chance of illness when health drops below 40; sick pets decay faster and are restricted to vet/sleep only |
+| Memory Scrapbook | Automatically records milestone moments (level-ups, badges, days together, spending milestones) as journal entries |
+| AI Chat (Dr. Paws) | Groq-powered streaming chat advisor that gives context-aware advice based on the pet's current stats |
+| Stat toggle reports | Health report lets the user show/hide individual stat lines on the chart |
+| Downloadable reports | All four reports export formatted `.txt` files |
 
 ---
 
 ## Browser Compatibility
 
-✅ Chrome 51+  
-✅ Firefox 54+  
-✅ Safari 10+  
-✅ Edge 15+  
+Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
 
 ---
 
-## Performance
+## Credits and Attribution
 
-- **Load Time**: ~500ms
-- **Game Loop**: 5-second intervals
-- **Memory**: ~5-10MB
-- **Storage**: Uses browser localStorage
-
----
-
-## Credits
-
-**Developer**: Student Entry - FBLA Competition  
-**Version**: 1.0  
-**Status**: Production Ready  
-**Last Updated**: May 2026  
-
-See `RESOURCES.md` for complete attribution and library references.
-
----
-
-## Support
-
-- Click **?** button in-game for help
-- Use `DEBUG` commands in browser console
-- Review this README for detailed information
-- Check `docs/` folder for technical details
-
----
-
-**🎉 Enjoy your Virtual Pet! 🎉**
+See `RESOURCES.md` for the complete list of external libraries and resources used.
