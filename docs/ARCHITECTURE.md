@@ -403,49 +403,6 @@ All critical operations wrapped in try-catch:
 4. **Progressive Web App** - Service worker integration
 5. **Advanced Graphics** - Canvas/WebGL rendering
 
-## Design Decisions
-
-### Why Vanilla JavaScript?
-
-- Demonstrates core JavaScript mastery
-- No dependency on frameworks
-- Smaller file size and faster load
-- Shows understanding of fundamentals
-- Perfect for FBLA competition requirements
-
-### Why localStorage?
-
-- Simple data persistence for this scope
-- Works offline completely
-- No server setup required
-- Suitable for game saves
-- Browser standard API
-
-### Why Periodic Updates?
-
-- 5-second intervals balance responsiveness and performance
-- Allows stat degradation over time
-- Prevents CPU overload
-- Good for casual gameplay pace
-
-### Why MVC Pattern?
-
-- Clear separation of concerns
-- Easier to test and maintain
-- Scalable architecture
-- Industry standard approach
-- Demonstrates architectural knowledge
-
-## Future Architecture Improvements
-
-1. **TypeScript** - Add type safety
-2. **Unit Tests** - Jest/Mocha testing framework
-3. **Build Pipeline** - Webpack/Vite bundling
-4. **Backend API** - Node.js/Express server
-5. **Database** - MongoDB/PostgreSQL persistence
-6. **State Management** - Redux/Vuex patterns
-7. **Component Framework** - React/Vue migration
-8. **Progressive Web App** - Service workers and manifest
 
 ---
 

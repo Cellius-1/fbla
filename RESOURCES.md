@@ -1,4 +1,4 @@
-# PetPal AI — Resources & Attribution
+# PetPal — Resources & Attribution
 
 **FBLA Introduction to Programming 2025-2026**
 **Developer:** Tharun Naguleswaran

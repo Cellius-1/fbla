@@ -1,7 +1,7 @@
 # PetPal AI — FBLA Introduction to Programming 2025-2026
 
-**Developer:** Cellius-1
-**Event:** Introduction to Programming — High School Division
+**Developer:** Tharun Naguleswaran
+**Event:** Introduction to Programming
 **Technologies:** HTML5, CSS3, Vanilla JavaScript (ES6+), Chart.js, Groq API
 
 ---
@@ -10,9 +10,9 @@
 
 **Topic:** *Build a Virtual Pet* — Create a digital pet that users can name, feed, and care for over time. The pet should respond to how well it is treated, showing emotions, changing appearance or behavior, and developing based on the user's actions. Include a "cost of care" system to teach users about the financial responsibility of pet ownership.
 
-The table below maps every requirement from the official topic to the specific feature in PetPal AI that addresses it.
+The table below maps every requirement  to the specific feature in PetPal AI that addresses it.
 
-| Topic Requirement | How PetPal AI Addresses It |
+| Topic Requirement | How PetPal  Addresses It |
 |---|---|
 | User names the pet, chooses type | 3-step setup wizard — name (validated), pet type (Dog/Cat/Rabbit/Bird), color, and personality |
 | Feed, play, rest, clean, health check | Five care actions: Feed, Play, Sleep, Clean, Vet — each with real coin costs and stat effects |
@@ -114,7 +114,7 @@ fbla/
 
 ---
 
-## Features Beyond the Required Prompt
+## Additional Features 
 
 | Feature | Description |
 |---|---|
