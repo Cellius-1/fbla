@@ -41,9 +41,7 @@ These are the only external dependencies loaded by the project. All other code i
 
 ---
 
-## Original Code
-
-All JavaScript, HTML, and CSS in this project was written originally for this FBLA submission. No templates, starter kits, or code generators were used.
+## Code
 
 | File | Description |
 |---|---|

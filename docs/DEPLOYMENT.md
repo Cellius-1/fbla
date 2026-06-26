@@ -141,9 +141,9 @@ public/
 
 ### CORS Handling
 
-- ✅ No cross-origin requests (local storage only)
-- ✅ No third-party API calls
-- ✅ Safe for same-origin deployment
+- ✅ One cross-origin request: the Chat tab calls `api.groq.com` — requires a user-supplied Groq API key and only fires when the user sends a message
+- ✅ All game data (stats, saves, expenses) is stored locally via localStorage — no data leaves the browser during normal gameplay
+- ✅ Safe for same-origin deployment; the Groq endpoint handles its own CORS headers
 
 ### Privacy
 
@@ -287,9 +287,17 @@ Ensure all files are included:
 - ✅ css/styles.css
 - ✅ css/animations.css
 - ✅ js/constants.js
+- ✅ js/icons.js
+- ✅ js/PixelSprites.js
+- ✅ js/Validator.js
 - ✅ js/Pet.js
-- ✅ js/Game.js
 - ✅ js/StorageManager.js
+- ✅ js/Game.js
+- ✅ js/AICompanion.js
+- ✅ js/PersonalityEngine.js
+- ✅ js/Scrapbook.js
+- ✅ js/ReportsCenter.js
+- ✅ js/HelpCenter.js
 - ✅ js/UIController.js
 - ✅ js/main.js
 - ✅ README.md
@@ -311,41 +319,7 @@ Ensure all files are included:
 ✅ No executable code is "uncommented" for submission  
 ✅ Debug utilities remain accessible via console  
 
-### Rubric Alignment
 
-**Code Quality**: 9-10/10
-- Comments clear and useful
-- Modular and organized structure
-- Professional naming conventions
-
-**User Experience**: 9-10/10
-- Intuitive interface
-- Clear instructions
-- Interactive help system
-- No navigation errors
-
-**Input Validation**: 5/5
-- Both syntactical and semantic validation
-- Error feedback provided
-- Edge cases handled
-
-**Functionality**: 9-10/10
-- All prompt requirements met
-- Extra features included
-- Well-documented
-
-**Data Storage**: 5/5
-- Complex data structures used
-- Variable scope proper
-- Clear naming
-
-**Documentation**: 9-10/10
-- Comprehensive README
-- Source code included
-- Libraries documented
-- Attribution complete
-
----
 
 ## Long-Term Maintenance
 
@@ -389,6 +363,4 @@ Ensure all files are included:
 
 **Deployment Guide Version**: 1.0  
 **Last Updated**: May 2026  
-**Status**: Production Ready  
 
-🚀 Ready to Deploy! 🚀
