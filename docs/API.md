@@ -743,5 +743,4 @@ CHORES = [
 
 ---
 
-**API Version**: 1.0  
 **Last Updated**: May 2026  
