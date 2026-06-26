@@ -94,8 +94,6 @@ These tools were used during development but are not part of the submitted proje
 
 ## Web Standards Referenced
 
-No external frameworks were used. The project relies entirely on open web standards:
-
 - **HTML5** — https://html.spec.whatwg.org/
 - **CSS3 / CSS Custom Properties** — https://www.w3.org/Style/CSS/
 - **ES6+ JavaScript** — https://www.ecma-international.org/
