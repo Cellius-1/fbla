@@ -1449,28 +1449,30 @@ h5 { font-size: 0.5625rem; }
    CELEBRATION POPUP
 ══════════════════════════════════════════════════════════ */
 .celebration-popup {
-  position: fixed; top: 50%; left: 50%;
+  position: fixed; bottom: 1.25rem; right: 1.25rem;
   z-index: 9100; pointer-events: none;
+  max-width: 220px;
 }
 .celebration-content {
-  background: var(--surface); border: 4px solid var(--yellow);
-  padding: var(--sp-8) var(--sp-10); text-align: center;
-  box-shadow: 6px 6px 0 rgba(0,0,0,0.8), 0 0 20px rgba(255,215,0,0.3);
-  position: relative;
+  background: var(--surface); border: 3px solid var(--yellow);
+  padding: var(--sp-4) var(--sp-6); text-align: left;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.8), 0 0 12px rgba(255,215,0,0.25);
+  position: relative; display: flex; align-items: center; gap: var(--sp-4);
 }
 .celebration-icon {
-  width: 68px; height: 68px;
-  background: rgba(255,215,0,.12); border: 3px solid var(--yellow);
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: rgba(255,215,0,.12); border: 2px solid var(--yellow);
   display: flex; align-items: center; justify-content: center;
-  margin: 0 auto var(--sp-4); color: var(--yellow);
-  box-shadow: 3px 3px 0 #886600;
+  color: var(--yellow);
+  box-shadow: 2px 2px 0 #886600;
 }
+.celebration-text { min-width: 0; }
 .celebration-title {
-  font-family: var(--font-pixel); font-size: 0.75rem; color: var(--yellow);
-  margin-bottom: var(--sp-2);
-  text-shadow: 2px 2px 0 #886600;
+  font-family: var(--font-pixel); font-size: 0.5rem; color: var(--yellow);
+  margin-bottom: var(--sp-1);
+  text-shadow: 1px 1px 0 #886600;
 }
-.celebration-desc { font-family: var(--font-body); font-size: 0.9375rem; color: var(--text-2); }
+.celebration-desc { font-family: var(--font-body); font-size: 0.75rem; color: var(--text-2); line-height: 1.3; }
 
 /* ══════════════════════════════════════════════════════════
    HELP CENTER
